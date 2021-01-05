@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: '首页',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'el-icon-house', affix: true }
       }
     ]
   },
@@ -136,7 +136,7 @@ export const asyncRoutes = [
     name: '校务管理',
     meta: {
       title: '校务管理',
-      icon: 'nested'
+      icon: 'el-icon-office-building'
     },
     children: [
       {
@@ -178,7 +178,7 @@ export const asyncRoutes = [
     name: '课程管理',
     meta: {
       title: '课程管理',
-      icon: 'nested'
+      icon: 'el-icon-document-copy'
     },
     children: [
       {
@@ -202,7 +202,7 @@ export const asyncRoutes = [
     name: '作业考试',
     meta: {
       title: '作业考试',
-      icon: 'nested'
+      icon: 'el-icon-edit'
     },
     children: [
       {
@@ -232,7 +232,7 @@ export const asyncRoutes = [
     name: '无电脑智能学习',
     meta: {
       title: '无电脑智能学习',
-      icon: 'nested'
+      icon: 'el-icon-monitor'
     },
     children: [
       {
@@ -334,7 +334,7 @@ export const asyncRoutes = [
     name: '同步试题包',
     meta: {
       title: '同步试题包',
-      icon: 'nested'
+      icon: 'el-icon-position'
     },
     children: [
       {
