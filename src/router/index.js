@@ -78,8 +78,8 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -129,6 +129,222 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/school-management',
+    component: Layout,
+    redirect: '/school-management/learning-situation/index',
+    name: '校务管理',
+    meta: {
+      title: '校务管理',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'learning-situation',
+        name: '学习情况',
+        component: () => import('@/views/school-management/learning-situation/index'),
+        meta: { title: '学习情况' }
+      },
+      {
+        path: 'student-management',
+        name: '学生管理',
+        component: () => import('@/views/school-management/student-management/index'),
+        meta: { title: '学生管理' }
+      },
+      {
+        path: 'class-management',
+        name: '班级管理',
+        component: () => import('@/views/school-management/class-management/index'),
+        meta: { title: '班级管理' }
+      },
+      {
+        path: 'grade-management',
+        name: '年级管理',
+        component: () => import('@/views/school-management/grade-management/index'),
+        meta: { title: '年级管理' }
+      },
+      {
+        path: 'student-recycle-bin',
+        name: '学生回收站',
+        component: () => import('@/views/school-management/student-recycle-bin/index'),
+        meta: { title: '学生回收站' }
+      }
+    ]
+  },
+  {
+    path: '/course-management',
+    component: Layout,
+    redirect: '/course-management/error-correction/index',
+    name: '课程管理',
+    meta: {
+      title: '课程管理',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'error-correction',
+        name: '题目纠错',
+        component: () => import('@/views/course-management/error-correction/index'),
+        meta: { title: '题目纠错' }
+      },
+      {
+        path: 'topic-entry-management',
+        name: '题目录入管理',
+        component: () => import('@/views/course-management/topic-entry-management/index'),
+        meta: { title: '题目录入管理' }
+      }
+    ]
+  },
+  {
+    path: '/operation-test',
+    component: Layout,
+    redirect: '/operation-test/student-work/index',
+    name: '作业考试',
+    meta: {
+      title: '作业考试',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'student-work',
+        name: '学生作业',
+        component: () => import('@/views/operation-test/student-work/index'),
+        meta: { title: '学生作业' }
+      }, {
+        path: 'class-work',
+        name: '班级作业',
+        component: () => import('@/views/operation-test/class-work/index'),
+        meta: { title: '班级作业' }
+      },
+
+      {
+        path: 'test-distribution',
+        name: '考试分发',
+        component: () => import('@/views/operation-test/test-distribution/index'),
+        meta: { title: '考试分发' }
+      }
+    ]
+  },
+  {
+    path: '/intelligent-learning',
+    component: Layout,
+    redirect: '/intelligent-learning/group-center',
+    name: '无电脑智能学习',
+    meta: {
+      title: '无电脑智能学习',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'group-center',
+        component: () => import('@/views/intelligent-learning/group-center/index'),
+        name: '组卷中心',
+        meta: { title: '组卷中心' }
+      },
+      {
+        path: 'pre-school-test',
+        component: () => import('@/views/intelligent-learning/pre-school-test'), // Parent router-view
+        name: '学前测试',
+        meta: { title: '学前测试' },
+        redirect: '/pre-school-test/print-the-entry',
+        children: [
+          {
+            path: 'print-the-entry',
+            component: () => import('@/views/intelligent-learning/pre-school-test/print-the-entry'),
+            name: '打印录入',
+            meta: { title: '打印录入' }
+          },
+          {
+            path: 'report-details',
+            component: () => import('@/views/intelligent-learning/pre-school-test/report-details'),
+            name: '报告详情',
+            meta: { title: '报告详情' }
+          }
+        ]
+      },
+      {
+        path: 'unit-operation',
+        component: () => import('@/views/intelligent-learning/unit-operation'), // Parent router-view
+        name: '单元作业',
+        meta: { title: '单元作业' },
+        redirect: '/unit-operation/print-the-entry/index',
+        children: [
+          {
+            path: 'print-the-entry',
+            component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry/index'),
+            name: '打印录入',
+            meta: { title: '打印录入' }
+          },
+          {
+            path: 'report-details',
+            component: () => import('@/views/intelligent-learning/unit-operation/report-details/index'),
+            name: '报告详情',
+            meta: { title: '报告详情' }
+          }
+        ]
+      },
+      {
+        path: 'paper-test',
+        component: () => import('@/views/intelligent-learning/paper-test'), // Parent router-view
+        name: '试卷考试',
+        meta: { title: '试卷考试' },
+        redirect: '/paper-test/print-the-entry/index',
+        children: [
+          {
+            path: 'print-the-entry',
+            component: () => import('@/views/intelligent-learning/paper-test/print-the-entry/index'),
+            name: '打印录入',
+            meta: { title: '打印录入' }
+          },
+          {
+            path: 'report-details',
+            component: () => import('@/views/intelligent-learning/paper-test/report-details/index'),
+            name: '报告详情',
+            meta: { title: '报告详情' }
+          }
+        ]
+      },
+      {
+        path: 'wrong-topic-test',
+        component: () => import('@/views/intelligent-learning/wrong-topic-test'), // Parent router-view
+        name: '错题测试',
+        meta: { title: '错题测试' },
+        redirect: '/wrong-topic-test/print-the-entry/index',
+        children: [
+          {
+            path: 'print-the-entry',
+            component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry/index'),
+            name: '打印录入',
+            meta: { title: '打印录入' }
+          },
+          {
+            path: 'report-details',
+            component: () => import('@/views/intelligent-learning/wrong-topic-test/report-details/index'),
+            name: '报告详情',
+            meta: { title: '报告详情' }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/synchronous-test',
+    component: Layout,
+    redirect: '/synchronous-test/paper-bag/index',
+    name: '同步试题包',
+    meta: {
+      title: '同步试题包',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'paper-bag/index',
+        name: '同步试题包',
+        component: () => import('@/views/synchronous-test/paper-bag/index'),
+        meta: { title: '同步试题包' }
+      }
+    ]
+  },
   {
     path: '/permission',
     component: Layout,
