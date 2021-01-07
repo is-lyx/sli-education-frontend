@@ -29,7 +29,7 @@
                 v-model="form.id"
                 style="width: 203px;"
                 placeholder="请输入账号"
-                @keyup.enter.native="findClubsListData"
+                @keyup.enter.native="findLearningSituationData"
               />
             </el-form-item>
             <el-form-item label="姓名：">
@@ -37,7 +37,7 @@
                 v-model="form.name"
                 style="width: 203px;"
                 placeholder="请输入姓名"
-                @keyup.enter.native="findClubsListData"
+                @keyup.enter.native="findLearningSituationData"
               />
             </el-form-item>
             <el-form-item label="手机号：">
@@ -45,7 +45,7 @@
                 v-model="form.phoneNumber"
                 style="width: 203px;"
                 placeholder="请输入手机号"
-                @keyup.enter.native="findClubsListData"
+                @keyup.enter.native="findLearningSituationData"
               />
             </el-form-item>
             <el-form-item label="最后登录时间：">
