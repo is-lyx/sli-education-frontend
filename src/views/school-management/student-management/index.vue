@@ -88,6 +88,7 @@
       <el-table
         v-loading="listLoading"
         :data="StudentList"
+        :default-sort="{prop: 'totalIntegral', order: 'descending'}"
         stripe
         border
       >
@@ -118,6 +119,7 @@
         <el-table-column
           label="总积分"
           prop="totalIntegral"
+          sortable
         />
         <el-table-column
           label="到期时间"
@@ -208,51 +210,51 @@ export default {
         {
           id: 'qz70019553',
           name: '王小虎',
-          phoneNumber: '123456',
+          phoneNumber: '55555',
           school: '启智文坊学堂',
           class: '小学高年级托管班',
           teacher: '蒋启文',
-          totalIntegral: '291',
+          totalIntegral: '294',
           dueTime: '2021-01-05 16:48:42'
         },
         {
-          id: 'qz70019553',
+          id: 'qz70019554',
           name: '王小虎',
-          phoneNumber: '123456',
+          phoneNumber: '33333',
           school: '启智文坊学堂',
           class: '小学高年级托管班',
           teacher: '蒋启文',
-          totalIntegral: '291',
+          totalIntegral: '289',
           dueTime: '2021-01-05 16:48:42'
         },
         {
-          id: 'qz70019553',
+          id: 'qz70019555',
           name: '王小虎',
-          phoneNumber: '123456',
+          phoneNumber: '22222',
           school: '启智文坊学堂',
           class: '小学高年级托管班',
           teacher: '蒋启文',
-          totalIntegral: '291',
+          totalIntegral: '234',
           dueTime: '2021-01-05 16:48:42'
         },
         {
-          id: 'qz70019553',
+          id: 'qz70019556',
           name: '王小虎',
-          phoneNumber: '123456',
+          phoneNumber: '44444',
           school: '启智文坊学堂',
           class: '小学高年级托管班',
           teacher: '蒋启文',
-          totalIntegral: '291',
+          totalIntegral: '290',
           dueTime: '2021-01-05 16:48:42'
         },
         {
-          id: 'qz70019553',
+          id: 'qz70019557',
           name: '王小虎',
-          phoneNumber: '123456',
+          phoneNumber: '11111',
           school: '启智文坊学堂',
           class: '小学高年级托管班',
           teacher: '蒋启文',
-          totalIntegral: '291',
+          totalIntegral: '212',
           dueTime: '2021-01-05 16:48:42'
         }],
       form: {
