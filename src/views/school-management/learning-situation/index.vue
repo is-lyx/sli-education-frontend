@@ -67,6 +67,7 @@
       <el-table
         v-loading="listLoading"
         :data="learningList"
+        :default-sort="{prop: 'integral', order: 'descending'}"
         stripe
         border
       >
@@ -85,6 +86,7 @@
         <el-table-column
           label="当日积分"
           prop="integral"
+          sortable
         />
         <el-table-column
           label="总积分"
