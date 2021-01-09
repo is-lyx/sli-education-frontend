@@ -29,7 +29,7 @@
                 v-model="form.className"
                 style="width: 203px;"
                 placeholder="请输入班级名称"
-                @keyup.enter.native="findClubsListData"
+                @keyup.enter.native="findClassListData"
               />
             </el-form-item>
           </div>
@@ -206,12 +206,12 @@ export default {
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getLearningListData()
+      this.getClassListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getLearningListData()
+      this.getClassListData()
     }
   }
 }

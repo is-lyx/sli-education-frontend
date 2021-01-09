@@ -1,6 +1,5 @@
 <template>
   <div style="padding:30px;">
-    <el-alert :closable="false" title="年级管理" />
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
@@ -30,7 +29,7 @@
                 v-model="form.grade"
                 style="width: 203px;"
                 placeholder="请输入年级"
-                @keyup.enter.native="findGradeListListData"
+                @keyup.enter.native="findStudentListData"
               />
             </el-form-item>
             <el-form-item label="系列（1小2初3高）：">
@@ -38,7 +37,7 @@
                 v-model="form.series"
                 style="width: 203px;"
                 placeholder="请输入系列号"
-                @keyup.enter.native="findGradeListListData"
+                @keyup.enter.native="findStudentListData"
               />
             </el-form-item>
           </div>
@@ -141,11 +140,11 @@ export default {
     }
   },
   methods: {
-    findGradeListListData() {
+    findStudentListData() {
       this.queryInfo.page = 1
-      this.getGradeListListData()
+      this.getStudentListData()
     },
-    getGradeListListData() {
+    getStudentListData() {
       // 获取列表
     },
     handleResetSearch() {
@@ -155,12 +154,12 @@ export default {
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getLearningListData()
+      this.getStudentListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getLearningListData()
+      this.getStudentListData()
     }
   }
 }
