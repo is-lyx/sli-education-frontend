@@ -110,7 +110,7 @@
       <el-table-column v-if="columnVisibles[10]" label="纠错备注" prop="errorRemark" />
       <el-table-column v-if="columnVisibles[11]" label="纠错时间" prop="errorCorrectionTime" />
       <el-table-column v-if="columnVisibles[12]" label="流程状态" prop="state" />
-      <el-table-column v-if="columnVisibles[16]" label="操作" min-width="105">
+      <el-table-column v-if="columnVisibles[13]" label="操作" min-width="105">
         <template slot-scope="scope">
           <el-button
             type="primary"
