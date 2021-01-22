@@ -43,9 +43,8 @@
             type="danger"
             size="mini"
             icon="el-icon-close"
-            @click="deleteQuestion"
+            @click="deleteQuestion(scope.row)"
           >删除</el-button>
-          <el-button size="small" type="text" @click.stop="clickFunc(scope.row)">操作按钮</el-button>
         </template>
       </el-table-column>
     </PageTable>

@@ -263,7 +263,8 @@ export default {
 .page-table-ctn {
   > .el-table {
     width: auto;
-    margin: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ebeef5;
     border-bottom: unset;
   }
