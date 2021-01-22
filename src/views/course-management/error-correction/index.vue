@@ -131,7 +131,7 @@
 
 <script>
 // 引入表格组件
-import PageTable from '../PageTable.vue'
+import PageTable from '../../PageTable.vue'
 
 export default {
   components: {
