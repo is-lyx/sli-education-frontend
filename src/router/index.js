@@ -130,6 +130,24 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/activation-code',
+    component: Layout,
+    redirect: '/activation-code/index',
+    name: '激活码管理',
+    meta: {
+      title: '激活码管理',
+      icon: 'el-icon-thumb'
+    },
+    children: [
+      {
+        path: 'index',
+        name: '激活码管理',
+        component: () => import('@/views/activation-code/index'),
+        meta: { title: '激活码管理' }
+      }
+    ]
+  },
+  {
     path: '/school-management',
     component: Layout,
     redirect: '/school-management/learning-situation/index',
