@@ -62,7 +62,6 @@
       :paging="true"
       :dynamic-column-setting="true"
       :column-visibles="columnVisibles"
-      :default-sort="{prop: 'grade', order: 'descending'}"
       :hiden-column-indexs="[0,1,10,11,12]"
       :always-show-column-indexs="[3]"
 
@@ -119,7 +118,7 @@ export default {
       form: {
         class: ''
       },
-      columnVisibles: new Array(17).fill(true)
+      columnVisibles: new Array(14).fill(true)
     }
   },
   mounted() {
