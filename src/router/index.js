@@ -117,8 +117,8 @@ export const constantRoutes = [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        name: '个人中心',
+        meta: { title: '个人中心', icon: 'user', noCache: true }
       }
     ]
   }
@@ -133,24 +133,19 @@ export const asyncRoutes = [
     path: '/activation-code',
     component: Layout,
     redirect: '/activation-code/index',
-    name: '激活码管理',
-    meta: {
-      title: '激活码管理',
-      icon: 'el-icon-thumb'
-    },
     children: [
       {
         path: 'index',
         name: '激活码管理',
         component: () => import('@/views/activation-code/index'),
-        meta: { title: '激活码管理' }
+        meta: { title: '激活码管理', icon: 'el-icon-thumb' }
       }
     ]
   },
   {
     path: '/school-management',
     component: Layout,
-    redirect: '/school-management/learning-situation/index',
+    redirect: '/school-management/learning-situation',
     name: '校务管理',
     meta: {
       title: '校务管理',
@@ -192,7 +187,7 @@ export const asyncRoutes = [
   {
     path: '/course-management',
     component: Layout,
-    redirect: '/course-management/error-correction/index',
+    redirect: '/course-management/error-correction',
     name: '课程管理',
     meta: {
       title: '课程管理',
@@ -216,7 +211,7 @@ export const asyncRoutes = [
   {
     path: '/operation-test',
     component: Layout,
-    redirect: '/operation-test/student-work/index',
+    redirect: '/operation-test/student-work',
     name: '作业考试',
     meta: {
       title: '作业考试',
@@ -261,10 +256,10 @@ export const asyncRoutes = [
       },
       {
         path: 'pre-school-test',
-        component: () => import('@/views/intelligent-learning/pre-school-test'), // Parent router-view
+        component: () => import('@/views/intelligent-learning/pre-school-test/index'), // Parent router-view
         name: '学前测试',
         meta: { title: '学前测试' },
-        redirect: '/pre-school-test/print-the-entry',
+        redirect: '/intelligent-learning/pre-school-test/print-the-entry',
         children: [
           {
             path: 'print-the-entry',
@@ -282,20 +277,20 @@ export const asyncRoutes = [
       },
       {
         path: 'unit-operation',
-        component: () => import('@/views/intelligent-learning/unit-operation'), // Parent router-view
+        component: () => import('@/views/intelligent-learning/unit-operation/index'), // Parent router-view
         name: '单元作业',
         meta: { title: '单元作业' },
-        redirect: '/unit-operation/print-the-entry/index',
+        redirect: '/intelligent-learning/unit-operation/print-the-entry',
         children: [
           {
             path: 'print-the-entry',
-            component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry/index'),
+            component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry'),
             name: '打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
-            component: () => import('@/views/intelligent-learning/unit-operation/report-details/index'),
+            component: () => import('@/views/intelligent-learning/unit-operation/report-details'),
             name: '报告详情',
             meta: { title: '报告详情' }
           }
@@ -303,20 +298,20 @@ export const asyncRoutes = [
       },
       {
         path: 'paper-test',
-        component: () => import('@/views/intelligent-learning/paper-test'), // Parent router-view
+        component: () => import('@/views/intelligent-learning/paper-test/index'), // Parent router-view
         name: '试卷考试',
         meta: { title: '试卷考试' },
-        redirect: '/paper-test/print-the-entry/index',
+        redirect: '/intelligent-learning/paper-test/print-the-entry',
         children: [
           {
             path: 'print-the-entry',
-            component: () => import('@/views/intelligent-learning/paper-test/print-the-entry/index'),
+            component: () => import('@/views/intelligent-learning/paper-test/print-the-entry'),
             name: '打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
-            component: () => import('@/views/intelligent-learning/paper-test/report-details/index'),
+            component: () => import('@/views/intelligent-learning/paper-test/report-details'),
             name: '报告详情',
             meta: { title: '报告详情' }
           }
@@ -324,20 +319,20 @@ export const asyncRoutes = [
       },
       {
         path: 'wrong-topic-test',
-        component: () => import('@/views/intelligent-learning/wrong-topic-test'), // Parent router-view
+        component: () => import('@/views/intelligent-learning/wrong-topic-test/index'), // Parent router-view
         name: '错题测试',
         meta: { title: '错题测试' },
-        redirect: '/wrong-topic-test/print-the-entry/index',
+        redirect: '/intelligent-learning/wrong-topic-test/print-the-entry',
         children: [
           {
             path: 'print-the-entry',
-            component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry/index'),
+            component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry'),
             name: '打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
-            component: () => import('@/views/intelligent-learning/wrong-topic-test/report-details/index'),
+            component: () => import('@/views/intelligent-learning/wrong-topic-test/report-details'),
             name: '报告详情',
             meta: { title: '报告详情' }
           }
@@ -349,17 +344,12 @@ export const asyncRoutes = [
     path: '/synchronous-test',
     component: Layout,
     redirect: '/synchronous-test/paper-bag/index',
-    name: '同步试题包',
-    meta: {
-      title: '同步试题包',
-      icon: 'el-icon-position'
-    },
     children: [
       {
         path: 'paper-bag/index',
         name: '同步试题包',
         component: () => import('@/views/synchronous-test/paper-bag/index'),
-        meta: { title: '同步试题包' }
+        meta: { title: '同步试题包', icon: 'el-icon-position' }
       }
     ]
   },
