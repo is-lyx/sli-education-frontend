@@ -1,6 +1,6 @@
 <template>
   <el-container class="page-table-ctn">
-    <el-table ref="pageTable" v-bind="$attrs" :data="filterData" v-on="$listeners">
+    <el-table ref="pageTable" v-bind="$attrs" :data="filterData" stripe v-on="$listeners">
       <slot />
       <el-table-column v-if="dynamicColumnSetting" width="40">
         <template slot="header">
