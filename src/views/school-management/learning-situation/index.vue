@@ -63,85 +63,45 @@
     </el-card>
 
     <!-- 列表 -->
-    <div style="margin-top: 20px;">
-      <el-table
-        v-loading="listLoading"
-        :data="learningList"
-        :default-sort="{prop: 'integral', order: 'descending'}"
-        stripe
-        border
-      >
-        <el-table-column
-          label="账号"
-          prop="id"
-        />
-        <el-table-column
-          label="姓名"
-          prop="name"
-        />
-        <el-table-column
-          label="性别"
-          prop="sex"
-        />
-        <el-table-column
-          label="当日积分"
-          prop="integral"
-          sortable
-        />
-        <el-table-column
-          label="总积分"
-          prop="totalIntegral"
-        />
-        <el-table-column
-          label="知识点掌握度"
-          prop="knowledgePoint"
-        />
-        <el-table-column
-          label="当日答题准确率"
-          prop="accuracy"
-        />
-        <el-table-column
-          label="总体答题准确率"
-          prop="totalAccuracy"
-        />
-        <el-table-column
-          label="上次登录时间"
-          prop="lastLoginTime"
-        />
-        <el-table-column
-          label="操作"
-          width="200px"
-        >
+    <PageTable
+      ref="dataTable"
+      :data="tableData"
+      :page-sizes="[5,10]"
+      :page-size="5"
+
+      :paging="true"
+      :dynamic-column-setting="true"
+      :column-visibles="columnVisibles"
+      :always-show-column-indexs="[1]"
+      :default-sort="{prop: 'integral', order: 'descending'}"
+
+      :show-always-show-column-in-checkbox="true"
+    >
+      <el-table-column v-if="columnVisibles[0]" label="账号" prop="id" />
+      <el-table-column v-if="columnVisibles[1]" label="姓名" prop="name" />
+      <el-table-column v-if="columnVisibles[2]" label="性别" prop="sex" />
+      <el-table-column v-if="columnVisibles[3]" label="当日积分" sortable prop="integral" />
+      <el-table-column v-if="columnVisibles[4]" label="总积分" prop="totalIntegral" />
+      <el-table-column v-if="columnVisibles[5]" label="知识点掌握度" prop="knowledgePoint" />
+      <el-table-column v-if="columnVisibles[6]" label="当日答题准确率" min-width="100" prop="accuracy" />
+      <el-table-column v-if="columnVisibles[7]" label="总体答题准确率" min-width="100" prop="totalAccuracy" />
+      <el-table-column v-if="columnVisibles[8]" label="上次登录时间" min-width="115" prop="lastLoginTime" />
+      <el-table-column v-if="columnVisibles[9]" label="操作" min-width="140">
+        <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
-            @click="getStudyReport"
-          >
-            <!--<i class="el-icon-tickets"></i>-->
-            学习报告</el-button>
+            @click="getStudyReport(scope.row)"
+          >学习报告</el-button>
           <el-button
             type="danger"
             size="mini"
-            @click="getKnowledgeMap"
-          >
-            <!--<i class="el-icon-guide"></i>-->
-            知识图谱</el-button>
-        </el-table-column>
-      </el-table>
-    </div>
+            @click="getKnowledgeMap(scope.row)"
+          >知识图谱</el-button>
+        </template>
+      </el-table-column>
+    </PageTable>
 
-    <!-- 分页区域 -->
-    <div style="text-align: center; margin-top: 30px;">
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
   </div>
 </template>
 
@@ -156,71 +116,22 @@
 </style>
 
 <script>
+import PageTable from '../../PageTable.vue'
+
 export default {
+  components: {
+    PageTable // 引用表格组件
+  },
   data() {
     return {
+      columnVisibles: new Array(10).fill(true),
       listLoading: false, // 假数据暂时为false，等接口调试时改为true
       queryInfo: {
         page: 1,
         limit: 5
       },
       total: 0,
-      learningList: [
-        {
-          id: 'qz70019553',
-          name: '王小虎',
-          sex: '男',
-          integral: '115',
-          totalIntegral: '7425',
-          knowledgePoint: '3.45',
-          accuracy: '0.65',
-          totalAccuracy: '0.59',
-          lastLoginTime: '2021-01-07 21:00:45'
-        },
-        {
-          id: 'qz70019553',
-          name: '王小虎',
-          sex: '男',
-          integral: '115',
-          totalIntegral: '7425',
-          knowledgePoint: '3.45',
-          accuracy: '0.65',
-          totalAccuracy: '0.59',
-          lastLoginTime: '2021-01-07 21:00:45'
-        },
-        {
-          id: 'qz70019553',
-          name: '王小虎',
-          sex: '男',
-          integral: '115',
-          totalIntegral: '7425',
-          knowledgePoint: '3.45',
-          accuracy: '0.65',
-          totalAccuracy: '0.59',
-          lastLoginTime: '2021-01-07 21:00:45'
-        },
-        {
-          id: 'qz70019553',
-          name: '王小虎',
-          sex: '男',
-          integral: '115',
-          totalIntegral: '7425',
-          knowledgePoint: '3.45',
-          accuracy: '0.65',
-          totalAccuracy: '0.59',
-          lastLoginTime: '2021-01-07 21:00:45'
-        },
-        {
-          id: 'qz70019553',
-          name: '王小虎',
-          sex: '男',
-          integral: '115',
-          totalIntegral: '7425',
-          knowledgePoint: '3.45',
-          accuracy: '0.65',
-          totalAccuracy: '0.59',
-          lastLoginTime: '2021-01-07 21:00:45'
-        }],
+      tableData: [],
       form: {
         id: '', // 账号
         name: '', // 姓名
@@ -229,7 +140,71 @@ export default {
       }
     }
   },
+  mounted() {
+    // 发起查询请求
+    this.queryData()
+  },
   methods: {
+    queryData() {
+      // 模拟后台数据
+      const data = [
+        {
+          id: 'qz70019553',
+          name: '王小虎',
+          sex: '男',
+          integral: '115',
+          totalIntegral: '7425',
+          knowledgePoint: '3.45',
+          accuracy: '0.65',
+          totalAccuracy: '0.59',
+          lastLoginTime: '2021-01-07 21:00:45'
+        },
+        {
+          id: 'qz70019553',
+          name: '王小虎',
+          sex: '男',
+          integral: '115',
+          totalIntegral: '7425',
+          knowledgePoint: '3.45',
+          accuracy: '0.65',
+          totalAccuracy: '0.59',
+          lastLoginTime: '2021-01-07 21:00:45'
+        },
+        {
+          id: 'qz70019553',
+          name: '王小虎',
+          sex: '男',
+          integral: '115',
+          totalIntegral: '7425',
+          knowledgePoint: '3.45',
+          accuracy: '0.65',
+          totalAccuracy: '0.59',
+          lastLoginTime: '2021-01-07 21:00:45'
+        },
+        {
+          id: 'qz70019553',
+          name: '王小虎',
+          sex: '男',
+          integral: '115',
+          totalIntegral: '7425',
+          knowledgePoint: '3.45',
+          accuracy: '0.65',
+          totalAccuracy: '0.59',
+          lastLoginTime: '2021-01-07 21:00:45'
+        },
+        {
+          id: 'qz70019553',
+          name: '王小虎',
+          sex: '男',
+          integral: '115',
+          totalIntegral: '7425',
+          knowledgePoint: '3.45',
+          accuracy: '0.65',
+          totalAccuracy: '0.59',
+          lastLoginTime: '2021-01-07 21:00:45'
+        }]
+      this.tableData = data
+    },
     findLearningSituationData() {
       this.queryInfo.page = 1
       this.getLearningListData()
