@@ -159,6 +159,27 @@ export const asyncRoutes = [
         meta: { title: '学习情况' }
       },
       {
+        path: '/StudyReport',
+        name: '学习报告',
+        component: () => import('@/views/school-management/learning-situation/StudyReport'),
+        meta: { title: '学习报告' },
+        hidden: true
+      },
+      {
+        path: '/KnowledgeMap',
+        name: '知识图谱',
+        component: () => import('@/views/school-management/learning-situation/KnowledgeMap'),
+        meta: { title: '知识图谱' },
+        hidden: true
+      },
+      {
+        path: '/WorkDetail',
+        name: '作业详情',
+        component: () => import('@/views/school-management/learning-situation/WorkDetail'),
+        meta: { title: '作业详情' },
+        hidden: true
+      },
+      {
         path: 'student-management',
         name: '学生管理',
         component: () => import('@/views/school-management/student-management/index'),

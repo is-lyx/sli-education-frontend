@@ -91,12 +91,12 @@
           <el-button
             type="primary"
             size="mini"
-            @click="getStudyReport(scope.row)"
+            @click="getStudyReport(scope.row.id)"
           >学习报告</el-button>
           <el-button
             type="danger"
             size="mini"
-            @click="getKnowledgeMap(scope.row)"
+            @click="getKnowledgeMap(scope.row.id)"
           >知识图谱</el-button>
         </template>
       </el-table-column>
@@ -218,11 +218,13 @@ export default {
       this.form.phoneNumber = ''
       this.form.lastLoginTime = ''
     },
-    getStudyReport() {
+    getStudyReport(id) {
       // 学习报告
+      this.$router.push({ path: '/StudyReport', query: { id: id }})
     },
-    getKnowledgeMap() {
+    getKnowledgeMap(id) {
       // 知识图谱
+      this.$router.push({ path: '/KnowledgeMap', query: { id: id }})
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
