@@ -1,17 +1,10 @@
 <template>
   <el-form>
-    <el-form-item label="用户名">
-      <el-input v-model.trim="user.name" />
+    <el-form-item label="旧密码">
+      <el-input v-model.trim="user.oldPassword" />
     </el-form-item>
-    <el-form-item label="邮箱">
-      <el-input v-model.trim="user.email" />
-    </el-form-item>
-    <el-form-item label="手机">
-      <el-input v-model.trim="user.phone" />
-    </el-form-item>
-    <el-form-item label="性别">
-      <el-radio v-model.trim="user.sex" label="1">男</el-radio>
-      <el-radio v-model.trim="user.sex" label="2">女</el-radio>
+    <el-form-item label="新密码">
+      <el-input v-model.trim="user.newPassword" />
     </el-form-item>
     <el-form-item style="text-align:center">
       <el-button type="primary" @click="submit">修改</el-button>
@@ -26,10 +19,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '',
-          email: '',
-          phone: '',
-          sex: ''
+          oldPassword: '',
+          newPassword: ''
         }
       }
     }
