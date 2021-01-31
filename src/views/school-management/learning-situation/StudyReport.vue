@@ -3,7 +3,7 @@
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
-        <span>筛选搜索</span>
+        <span>筛选搜索（学生：{{ name }}）</span>
         <el-button
           style="float: right;"
           type="primary"
@@ -92,7 +92,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="getWorkDetail(scope.row.testID)"
+            @click="getWorkDetail(scope.row.testID,name)"
           >作业详情</el-button>
         </template>
       </el-table-column>
@@ -120,6 +120,7 @@ export default {
   },
   data() {
     return {
+      name: this.$route.query.name,
       columnVisibles: new Array(14).fill(true),
       total: 0,
       tableData: [],
@@ -209,9 +210,9 @@ export default {
       this.form.state = ''
       this.form.creationTime = ''
     },
-    getWorkDetail(testID) {
+    getWorkDetail(testID, name) {
       // 作业详情
-      this.$router.push({ path: '/WorkDetail', query: { testID: testID }})
+      this.$router.push({ path: '/WorkDetail', query: { testID: testID, name: name }})
     }
   }
 }

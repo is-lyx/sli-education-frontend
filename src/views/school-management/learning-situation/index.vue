@@ -91,7 +91,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="getStudyReport(scope.row.id)"
+            @click="getStudyReport(scope.row.id,scope.row.name)"
           >学习报告</el-button>
           <el-button
             type="danger"
@@ -218,9 +218,9 @@ export default {
       this.form.phoneNumber = ''
       this.form.lastLoginTime = ''
     },
-    getStudyReport(id) {
+    getStudyReport(id, name) {
       // 学习报告
-      this.$router.push({ path: '/StudyReport', query: { id: id }})
+      this.$router.push({ path: '/StudyReport', query: { id: id, name: name }})
     },
     getKnowledgeMap(id) {
       // 知识图谱
