@@ -1136,22 +1136,22 @@
             <el-button
               type="primary"
               size="mini"
-              @click="openEnglishDialogVisible = true"
+              @click="getopenEnglish(scope.row.id)"
             >开通英语</el-button>
             <el-button
               type="primary"
               size="mini"
-              @click="distributionClassDialogVisible = true"
+              @click="getdistributionClass(scope.row.id)"
             >分配班级</el-button>
             <el-button
               type="primary"
               size="mini"
-              @click="getCourseList"
+              @click="getCourseList(scope.row.id)"
             >分发课程</el-button>
             <el-button
               type="primary"
               size="mini"
-              @click="rewardPoints"
+              @click="getrewardPoints(scope.row.id)"
             >奖励积分</el-button>
             <el-button
               type="success"
@@ -1831,10 +1831,25 @@
             </div>
           </el-form>
         </div>
-
         <div slot="footer" class="dialog-footer" style="text-align:center">
           <el-button @click="distributionCoursesDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="distributionCourses">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!--奖励积分-->
+      <el-dialog
+        title="修改学生积分"
+        :visible.sync="editrewardPointsDialogVisible"
+        width="45%"
+      >
+        <el-form :model="form">
+          <el-form-item label="修改积分" :label-width="formLabelWidth">
+            <el-input v-model="editrewardPoints.points" autocomplete="off" style="width: 300px;" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button @click="editrewardPointsDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="rewardPoints">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -1869,6 +1884,7 @@ export default {
       distributionClassDialogVisible: false, // 分配班级
       distributionCoursesDialogVisible: false, // 分配课程
       distributionAllCourseDialogVisible: false, // 分配所有课程确认框
+      editrewardPointsDialogVisible: false, // 奖励积分
       StudentList: [],
       form: {
         id: '', // 账号
@@ -1942,6 +1958,9 @@ export default {
         course: '',
         section: '',
         distribution: ''
+      },
+      editrewardPoints: {
+        points: ''
       }
     }
   },
@@ -2031,9 +2050,17 @@ export default {
     batchActivate() {
 
     },
+    getopenEnglish(id) {
+      this.openEnglishDialogVisible = true
+      // this.openEnglish()
+    },
     openEnglish() {
       this.openEnglishDialogVisible = false
       // 开通英语接口
+    },
+    getdistributionClass(id) {
+      this.distributionClassDialogVisible = true
+      // this.distributionClasses()
     },
     distributionClasses() {
       this.distributionClassDialogVisible = false
@@ -2043,7 +2070,7 @@ export default {
       this.distributionCoursesDialogVisible = false
       // 分配课程接口
     },
-    getCourseList() {
+    getCourseList(id) {
       this.distributionCoursesDialogVisible = true
       // 模拟后台数据courseData
       const testcourseData = [
@@ -2130,8 +2157,13 @@ export default {
       this.distributionCoursesForm.version = ''
       this.distributionCoursesForm.grade = ''
     },
+    getrewardPoints(id) {
+      this.editrewardPointsDialogVisible = true
+      // this.rewardPoints()
+    },
     rewardPoints() {
-
+      this.editrewardPointsDialogVisible = false
+      // 奖励积分接口
     },
     activate(id) {
     // 激活，管理员才有，后面需要添加v-if判断身份
