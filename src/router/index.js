@@ -166,13 +166,6 @@ export const asyncRoutes = [
         hidden: true
       },
       {
-        path: '/KnowledgeMap',
-        name: '知识图谱',
-        component: () => import('@/views/school-management/learning-situation/KnowledgeMap'),
-        meta: { title: '知识图谱' },
-        hidden: true
-      },
-      {
         path: '/WorkDetail',
         name: '作业详情',
         component: () => import('@/views/school-management/learning-situation/WorkDetail'),

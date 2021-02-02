@@ -96,8 +96,29 @@
           <el-button
             type="danger"
             size="mini"
-            @click="getKnowledgeMap(scope.row.id)"
+            @click="getKnowledgeMap(scope.row.id, scope.row.name)"
           >知识图谱</el-button>
+          <!--知识图谱-->
+          <el-dialog :title="knowledgeMapName + &quot;的知识图谱&quot;" :visible.sync="dialogTableVisible">
+            <PageTable
+              ref="dataTable"
+              :data="selfKnowledgeMapData"
+              :page-sizes="[5,10]"
+              :page-size="5"
+
+              :paging="true"
+              :dynamic-column-setting="true"
+              :column-visibles="columnVisibles"
+              :show-always-show-column-in-checkbox="true"
+            >
+              <el-table-column v-if="columnVisibles[0]" label="一级知识点" prop="knowledge1" />
+              <el-table-column v-if="columnVisibles[1]" label="二级知识点" prop="knowledge2" />
+              <el-table-column v-if="columnVisibles[2]" label="三级知识点" min-width="200" prop="knowledge3" />
+              <el-table-column v-if="columnVisibles[3]" label="用时(天)" min-width="60" prop="usingTime" />
+              <el-table-column v-if="columnVisibles[4]" label="掌握程度" min-width="50" prop="masteryDegree" />
+            </PageTable>
+          </el-dialog>
+
         </template>
       </el-table-column>
     </PageTable>
@@ -126,12 +147,15 @@ export default {
     return {
       columnVisibles: new Array(10).fill(true),
       listLoading: false, // 假数据暂时为false，等接口调试时改为true
+      dialogTableVisible: false,
       queryInfo: {
         page: 1,
         limit: 5
       },
       total: 0,
       tableData: [],
+      selfKnowledgeMapData: [], // 知识图谱
+      knowledgeMapName: '', // 当前是哪个学生的知识图谱
       form: {
         id: '', // 账号
         name: '', // 姓名
@@ -150,7 +174,7 @@ export default {
       const data = [
         {
           id: 'qz70019553',
-          name: '王小虎',
+          name: '王小虎1',
           sex: '男',
           integral: '115',
           totalIntegral: '7425',
@@ -161,7 +185,7 @@ export default {
         },
         {
           id: 'qz70019553',
-          name: '王小虎',
+          name: '王小虎2',
           sex: '男',
           integral: '115',
           totalIntegral: '7425',
@@ -172,7 +196,7 @@ export default {
         },
         {
           id: 'qz70019553',
-          name: '王小虎',
+          name: '王小虎3',
           sex: '男',
           integral: '115',
           totalIntegral: '7425',
@@ -183,7 +207,7 @@ export default {
         },
         {
           id: 'qz70019553',
-          name: '王小虎',
+          name: '王小虎4',
           sex: '男',
           integral: '115',
           totalIntegral: '7425',
@@ -194,7 +218,7 @@ export default {
         },
         {
           id: 'qz70019553',
-          name: '王小虎',
+          name: '王小虎5',
           sex: '男',
           integral: '115',
           totalIntegral: '7425',
@@ -222,9 +246,43 @@ export default {
       // 学习报告
       this.$router.push({ path: '/StudyReport', query: { id: id, name: name }})
     },
-    getKnowledgeMap(id) {
+    getKnowledgeMap(id, name) {
       // 知识图谱
-      this.$router.push({ path: '/KnowledgeMap', query: { id: id }})
+      this.dialogTableVisible = true
+      this.knowledgeMapName = name
+      // 调用接口展示个人数据
+      // 以下为模拟数据
+      const testData = [
+        {
+          knowledge1: '数与代数',
+          knowledge2: '常见的量',
+          knowledge3: '时、分、秒及其关系、单位换算与计算',
+          usingTime: '8',
+          masteryDegree: '80%'
+        },
+        {
+          knowledge1: '数学思维',
+          knowledge2: '数的认识',
+          knowledge3: '整千整百数的加减法',
+          usingTime: '4',
+          masteryDegree: '60%'
+        },
+        {
+          knowledge1: '数学思维',
+          knowledge2: '生活中的单位',
+          knowledge3: '长度单位（米，厘米）',
+          usingTime: '6',
+          masteryDegree: '60%'
+        },
+        {
+          knowledge1: '数与代数',
+          knowledge2: '常见的量',
+          knowledge3: '质量及质量的常用单位',
+          usingTime: '4',
+          masteryDegree: '80%'
+        }
+      ]
+      this.selfKnowledgeMapData = testData
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
