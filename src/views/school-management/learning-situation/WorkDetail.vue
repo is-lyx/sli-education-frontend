@@ -52,8 +52,20 @@
               style="width: 60px; height: 60px;"
             >
           </div>
-          <p style="font-size: 15px;">
-            {{ item.option }}
+          <p v-if="item.optionA !== ''" style="font-size: 15px;">
+            A.{{ item.optionA }}
+          </p>
+          <p v-if="item.optionB !== ''" style="font-size: 15px;">
+            B.{{ item.optionB }}
+          </p>
+          <p v-if="item.optionC !== ''" style="font-size: 15px;">
+            C.{{ item.optionC }}
+          </p>
+          <p v-if="item.optionD !== ''" style="font-size: 15px;">
+            D.{{ item.optionD }}
+          </p>
+          <p v-if="item.optionE !== ''" style="font-size: 15px;">
+            E.{{ item.optionE }}
           </p>
           <el-divider />
           <p style="font-size: 15px;">
@@ -61,8 +73,30 @@
           </p>
           <el-button
             type="primary"
-            @click="audit(item.id)"
+            @click="audit(item.question)"
           >纠错</el-button>
+
+          <el-dialog
+            title="审核题目"
+            :visible.sync="auditDialogVisible"
+            width="50%"
+            center
+          >
+            <span>
+              <p style="float:left;color:#B22222;">题目：</p>
+              <p>{{ dialogQuestion }}</p>
+              <div style="text-align:center">
+                <el-button
+                  type="primary"
+                  @click="questionFalse(item.id)"
+                >题目有误</el-button>
+                <el-button
+                  @click="auditDialogVisible = false"
+                >题目无误</el-button>
+              </div>
+            </span>
+          </el-dialog>
+
         </div>
       </el-card>
     </el-card>
@@ -90,13 +124,20 @@ export default {
     return {
       name: this.$route.query.name,
       columnVisibles: new Array(11).fill(true),
+      auditDialogVisible: false,
       total: 0,
       tableData: [],
       testList: [],
       form: {
         state: '',
         creationTime: ''
-      }
+      },
+      dialogQuestion: '',
+      dialogOptionA: '',
+      dialogOptionB: '',
+      dialogOptionC: '',
+      dialogOptionD: '',
+      dialogOptionE: ''
     }
   },
   mounted() {
@@ -168,28 +209,44 @@ export default {
           id: '1',
           question: '计算如图平行四边形的面积，正确算式是（　　）',
           img: '',
-          option: 'A. 4.8×6 B. 10×8 C. 6×8',
+          optionA: '4.8×6',
+          optionB: '10×8',
+          optionC: '6×8',
+          optionD: '',
+          optionE: '',
           studentOption: 'A'
         },
         {
           id: '2',
           question: '把一个由木条钉成的长方形捏住对角，拉成一个平行四边形，那么这两个图形的（　　）',
           img: '',
-          option: 'A. 面积相等，周长也相等B. 面积不相等，周长也不相等C. 面积相等，周长不相等D. 面积不相等，周长相等',
+          optionA: '面积相等，周长也相等',
+          optionB: '面积不相等，周长也不相等',
+          optionC: '面积相等，周长不相等',
+          optionD: '面积不相等，周长相等',
+          optionE: '',
           studentOption: 'B'
         },
         {
           id: '3',
           question: '如图中，长方形的面积是12平方厘米，那么，阴影部分的面积是（　　）平方厘米．',
           img: '',
-          option: 'A. 24B. 12C. 6',
+          optionA: '24',
+          optionB: '12',
+          optionC: '6',
+          optionD: '',
+          optionE: '',
           studentOption: 'C'
         },
         {
           id: '4',
           question: '圆形滑冰场的一周全长是200米．沿着这一圈每隔10米安装一盏灯，一共要安（　　）盏灯．',
           img: '',
-          option: 'A. 19B. 20C. 21D. 22',
+          optionA: '19',
+          optionB: '20',
+          optionC: '21',
+          optionD: '22',
+          optionE: '',
           studentOption: 'D'
         }]
       this.testList = data
@@ -199,6 +256,14 @@ export default {
     },
     getLearningListData() {
       // 获取列表
+    },
+    audit(question) {
+      this.auditDialogVisible = true
+      this.dialogQuestion = question
+      // 调用接口，根据题目id获取对应的详细答案，展示question仅为测试
+    },
+    questionFalse(id) {
+      console.log('id:' + id)
     }
   }
 }
