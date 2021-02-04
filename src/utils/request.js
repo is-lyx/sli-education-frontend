@@ -70,6 +70,20 @@ service.interceptors.response.use(
     } else {
       return res
     }
+
+    /* 连接口后放出
+    const res = response.data
+    // if the custom code is not 200, it is judged as an error.
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 3 * 1000
+      })
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return response
+    }*/
   },
   error => {
     console.log('err' + error) // for debug
