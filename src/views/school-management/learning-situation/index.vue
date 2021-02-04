@@ -148,11 +148,6 @@ export default {
       columnVisibles: new Array(10).fill(true),
       listLoading: false, // 假数据暂时为false，等接口调试时改为true
       dialogTableVisible: false,
-      queryInfo: {
-        page: 1,
-        limit: 5
-      },
-      total: 0,
       tableData: [],
       selfKnowledgeMapData: [], // 知识图谱
       knowledgeMapName: '', // 当前是哪个学生的知识图谱
@@ -230,7 +225,6 @@ export default {
       this.tableData = data
     },
     findLearningSituationData() {
-      this.queryInfo.page = 1
       this.getLearningListData()
     },
     getLearningListData() {
@@ -283,16 +277,6 @@ export default {
         }
       ]
       this.selfKnowledgeMapData = testData
-    },
-    // 监听pagesize改变的事件
-    handleSizeChange(newSize) {
-      this.queryInfo.limit = newSize
-      this.getLearningListData()
-    },
-    // 监听页码值改变的事件
-    handleCurrentChange(newPage) {
-      this.queryInfo.page = newPage
-      this.getLearningListData()
     }
   }
 }

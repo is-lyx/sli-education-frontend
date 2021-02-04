@@ -179,6 +179,12 @@ export const asyncRoutes = [
         meta: { title: '学生管理' }
       },
       {
+        path: 'teacher-management',
+        name: '教师管理',
+        component: () => import('@/views/school-management/teacher-management/index'),
+        meta: { title: '教师管理' }
+      },
+      {
         path: 'class-management',
         name: '班级管理',
         component: () => import('@/views/school-management/class-management/index'),
