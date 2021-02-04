@@ -1162,19 +1162,19 @@
             <el-button
               type="info"
               size="mini"
-              @click="edit"
+              @click="edit(scope.row.id)"
             >
               修改</el-button>
             <el-button
               type="warning"
               size="mini"
-              @click="reset"
+              @click="reset(scope.row.id)"
             >
               重置</el-button>
             <el-button
               type="danger"
               size="mini"
-              @click="deleteStudent"
+              @click="deleteStudent(scope.row.id)"
             >
               删除</el-button>
           </template>
@@ -1842,7 +1842,7 @@
         :visible.sync="editrewardPointsDialogVisible"
         width="45%"
       >
-        <el-form :model="form">
+        <el-form :model="editrewardPoints">
           <el-form-item label="修改积分" :label-width="formLabelWidth">
             <el-input v-model="editrewardPoints.points" autocomplete="off" style="width: 300px;" />
           </el-form-item>
@@ -1850,6 +1850,111 @@
         <div slot="footer" class="dialog-footer" style="text-align:center">
           <el-button @click="editrewardPointsDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="rewardPoints">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!--激活-->
+      <el-dialog
+        title="激活学生账号"
+        :visible.sync="activateDialogVisible"
+        width="40%"
+      >
+        <el-form :model="activateForm">
+          <el-form-item label="激活时间" :label-width="formLabelWidth">
+            <el-select
+              v-model="activateForm.activateTime"
+              placeholder="请选择时间"
+              clearable
+              style="width: 180px;"
+            >
+              <el-option
+                label="7天"
+                value="0"
+              />
+              <el-option
+                label="15天"
+                value="1"
+              />
+              <el-option
+                label="30天"
+                value="2"
+              />
+              <el-option
+                label="3个月"
+                value="3"
+              />
+              <el-option
+                label="6个月"
+                value="4"
+              />
+              <el-option
+                label="12个月"
+                value="5"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button @click="activateDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="getactivate">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!--修改-->
+      <el-dialog
+        title="修改学生信息"
+        :visible.sync="editDialogVisible"
+        width="50%"
+      >
+        <el-form :model="editForm">
+          <el-form-item label="账号" :label-width="formLabelWidth">
+            <el-input v-model="editForm.id" autocomplete="off" style="width: 300px;" :disabled="true" />
+          </el-form-item>
+          <el-form-item label="姓名" :label-width="formLabelWidth">
+            <el-input v-model="editForm.name" autocomplete="off" style="width: 300px;" />
+          </el-form-item>
+          <el-form-item label="性别" :label-width="formLabelWidth">
+            <el-select
+              v-model="editForm.sex"
+              placeholder="请选择性别"
+              clearable
+              style="width: 300px;"
+            >
+              <el-option
+                label="男"
+                value="0"
+              />
+              <el-option
+                label="女"
+                value="1"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="年级" :label-width="formLabelWidth">
+            <el-select
+              v-model="editForm.grade"
+              placeholder="请选择年级"
+              clearable
+              style="width: 300px;"
+            >
+              <el-option
+                label="三年级上"
+                value="0"
+              />
+              <el-option
+                label="数据待接口补充"
+                value="1"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="手机号" :label-width="formLabelWidth">
+            <el-input v-model="editForm.phone" autocomplete="off" style="width: 300px;" />
+          </el-form-item>
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-input v-model="editForm.note" autocomplete="off" style="width: 300px;" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="getedit">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -1885,6 +1990,8 @@ export default {
       distributionCoursesDialogVisible: false, // 分配课程
       distributionAllCourseDialogVisible: false, // 分配所有课程确认框
       editrewardPointsDialogVisible: false, // 奖励积分
+      activateDialogVisible: false, // 激活
+      editDialogVisible: false, // 修改
       StudentList: [],
       form: {
         id: '', // 账号
@@ -1961,6 +2068,17 @@ export default {
       },
       editrewardPoints: {
         points: ''
+      },
+      activateForm: {
+        activateTime: ''
+      },
+      editForm: {
+        id: '',
+        name: '',
+        sex: '',
+        grade: '',
+        phone: '',
+        note: ''
       }
     }
   },
@@ -2167,15 +2285,56 @@ export default {
     },
     activate(id) {
     // 激活，管理员才有，后面需要添加v-if判断身份
+      this.activateDialogVisible = true
+    // 激活的方法
+    // this.getactivate()
     },
-    edit() {
-
+    getactivate() {
+      this.activateDialogVisible = false
+      // 接口
     },
-    reset() {
-
+    edit(id) {
+      this.editDialogVisible = true
+      this.editForm.id = id
+      // 修改的方法
     },
-    deleteStudent() {
-
+    getedit() {
+      this.editDialogVisible = false
+      // 接口
+    },
+    reset(id) {
+      this.$confirm('此操作将重置该学生密码为123456, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '重置成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消重置'
+        })
+      })
+    },
+    deleteStudent(id) {
+      this.$confirm('此操作将永久删除该学生信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
