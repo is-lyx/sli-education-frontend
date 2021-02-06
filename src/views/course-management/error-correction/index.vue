@@ -110,22 +110,75 @@
       <el-table-column v-if="columnVisibles[10]" label="纠错备注" prop="errorRemark" />
       <el-table-column v-if="columnVisibles[11]" label="纠错时间" prop="errorCorrectionTime" />
       <el-table-column v-if="columnVisibles[12]" label="流程状态" prop="state" />
-      <el-table-column v-if="columnVisibles[13]" label="操作" min-width="105">
+      <el-table-column v-if="columnVisibles[13]" label="操作" min-width="60">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
-            @click="getQuestion(scope.row)"
-          >题目</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            @click="audit(scope.row)"
+            @click="audit(scope.row.id)"
           >审核</el-button>
         </template>
       </el-table-column>
     </PageTable>
-
+    <!--审核-->
+    <el-dialog :title="auditTitle" :visible.sync="auditVisible">
+      <el-card style="margin:10px">
+        <div>
+          <h4 style="text-align: left; font-size: 18px;">{{ questionForm.question }}</h4>
+          <div>
+            <el-image
+              v-if="questionForm.img !== null"
+              style="width: 60px; height: 60px;"
+              :src="questionForm.img"
+            />
+            <img
+              v-else
+              src="../../../assets/404_images/404.png"
+              style="width: 60px; height: 60px;"
+            >
+          </div>
+          <p v-if="questionForm.optionA !== ''" style="font-size: 15px;display:inline;">
+            A.{{ questionForm.optionA }}
+          </p>
+          <p v-if="questionForm.optionB !== ''" style="font-size: 15px;display:inline;">
+            B.{{ questionForm.optionB }}
+          </p>
+          <p v-if="questionForm.optionC !== ''" style="font-size: 15px;display:inline;">
+            C.{{ questionForm.optionC }}
+          </p>
+          <p v-if="questionForm.optionD !== ''" style="font-size: 15px;display:inline;">
+            D.{{ questionForm.optionD }}
+          </p>
+          <p v-if="questionForm.optionE !== ''" style="font-size: 15px;display:inline;">
+            E.{{ questionForm.optionE }}
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            简明答案：{{ questionForm.rightOption }}
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            详细答案：{{ questionForm.detailOption }}
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            解析：{{ questionForm.analysis }}
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            知识点：{{ questionForm.knowledge }}
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            年级：{{ questionForm.grade }}
+          </p>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button @click="auditVisible = false">题目无误</el-button>
+        <el-button type="primary" @click="postAudit">题目有误</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -146,7 +199,24 @@ export default {
         teacherName: '',
         state: ''
       },
-      columnVisibles: new Array(17).fill(true)
+      columnVisibles: new Array(14).fill(true),
+      auditVisible: false,
+      auditTitle: '审核题目',
+      questionForm: {
+        id: '1',
+        question: '题目',
+        img: '',
+        optionA: '1',
+        optionB: '2',
+        optionC: '3',
+        optionD: '4',
+        optionE: '5',
+        rightOption: '1',
+        detailOption: '详细答案blablabla',
+        analysis: '解析',
+        knowledge: '',
+        grade: ''
+      }
     }
   },
   mounted() {
@@ -165,15 +235,19 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
-    getQuestion(row) {
+    getQuestion() {
       // 获取题目
     },
-    audit() {
+    audit(id) {
       // 审核
+      this.auditVisible = true
+      this.questionForm.id = id
+      this.auditTitle = '审核题目(' + id + ')'
+      // this.getQuestion()
+    },
+    postAudit() {
+      this.auditVisible = false
+      // 提交审核接口
     },
     findErrorQueationListData() {
       // 搜索
