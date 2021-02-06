@@ -40,159 +40,184 @@
     <!-- 列表 -->
     <div style="margin-top: 20px;">
       <div style="margin-top: 10px; margin-bottom: 10px;">
-        <el-checkbox-group v-model="checkboxVal">
-          <el-checkbox label="classID">
-            班级ID
-          </el-checkbox>
-          <el-checkbox label="className">
-            班级名称
-          </el-checkbox>
-          <el-checkbox label="schoolName">
-            学校名称
-          </el-checkbox>
-          <el-checkbox label="grade">
-            年级
-          </el-checkbox>
-          <el-checkbox label="creationTime">
-            创建时间
-          </el-checkbox>
-          <el-checkbox label="founder">
-            创建人
-          </el-checkbox>
-          <el-checkbox label="modifyTime">
-            修改时间
-          </el-checkbox>
-          <el-checkbox label="teacher">
-            老师
-          </el-checkbox>
-          <el-checkbox label="modifier">
-            修改人
-          </el-checkbox>
-        </el-checkbox-group>
+        <PageTable
+          ref="dataTable"
+          :data="tableData"
+          :page-sizes="[5,10]"
+          :page-size="5"
+
+          :paging="true"
+          :dynamic-column-setting="true"
+          :column-visibles="columnVisibles"
+          :hiden-column-indexs="[0,2,3,6,8]"
+
+          :show-always-show-column-in-checkbox="true"
+        >
+          <el-table-column v-if="columnVisibles[0]" label="班级ID" prop="classID" />
+          <el-table-column v-if="columnVisibles[1]" label="班级名称" min-width="140" prop="className" />
+          <el-table-column v-if="columnVisibles[2]" label="学校名称" prop="schoolName" />
+          <el-table-column v-if="columnVisibles[3]" label="年级" prop="grade" />
+          <el-table-column v-if="columnVisibles[4]" label="创建时间" min-width="100" prop="creationTime" />
+          <el-table-column v-if="columnVisibles[5]" label="创建人" prop="founder" />
+          <el-table-column v-if="columnVisibles[6]" label="修改时间" min-width="100" prop="editTime" />
+          <el-table-column v-if="columnVisibles[7]" label="老师" prop="teacher" />
+          <el-table-column v-if="columnVisibles[8]" label="修改人" prop="editName" />
+          <el-table-column v-if="columnVisibles[9]" label="操作" min-width="60">
+            <template slot-scope="scope">
+              <el-button
+                type="primary"
+                size="mini"
+                @click="edit(scope.row.classID,scope.row.className)"
+              >编辑</el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                @click="deleteClass(scope.row.classID)"
+              >删除</el-button>
+            </template>
+          </el-table-column>
+        </PageTable>
+        <!--编辑-->
+        <el-dialog title="编辑信息" :visible.sync="editVisible">
+          <el-form :model="editClassForm" :rules="editClassFormRules">
+            <el-form-item label="班级名称" :label-width="formLabelWidth" prop="className">
+              <el-input v-model="editClassForm.className" autocomplete="off" placeholder="请输入班级名称" style="width: 300px;" />
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer" style="text-align:center">
+            <el-button @click="editVisible = false">取 消</el-button>
+            <el-button type="primary" @click="postEdit">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
-    </div>
-
-    <el-table :key="key" :data="classListData" border fit highlight-current-row style="width: 100%">
-      <el-table-column v-for="classData in formThead" :key="classData" :label="classData">
-        <template slot-scope="scope">
-          {{ scope.row[classData] }}
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="180">
-        暂无操作
-      </el-table-column>
-    </el-table>
-
-    <!-- 分页区域 -->
-    <div style="text-align: center; margin-top: 30px;">
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
     </div>
   </div>
 </template>
 
+<style scoped>
+.el-select .el-input {
+  width: 130px;
+}
+
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+</style>
+
 <script>
-const defaultFormThead = ['classID', 'className', 'creationTime', 'founder', 'teacher']
+import PageTable from '../../PageTable.vue'
 
 export default {
+  components: {
+    PageTable // 引用表格组件
+  },
   data() {
     return {
+      columnVisibles: new Array(10).fill(true),
+      editVisible: false,
+      formLabelWidth: '250px',
+      tableData: [],
       form: {
         className: '' // 班级名称
       },
-      queryInfo: {
-        page: 1,
-        limit: 5
+      editClassForm: {
+        className: ''
       },
-      total: 0,
-      classListData: [
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        },
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        },
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        },
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        },
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        },
-        {
-          classID: '255',
-          className: '	初一晚辅01班',
-          schoolName: '福州一中',
-          grade: '初一',
-          creationTime: '2020-11-08 15:43:06',
-          founder: '启智文坊学堂',
-          modifyTime: '-',
-          teacher: '傅雄,林珍,蒋启文',
-          modifier: '-'
-        }
-      ],
-      key: 1, // table key
-      formTheadOptions: ['classID', 'className', 'schoolName', 'grade', 'creationTime', 'founder', 'modifyTime', 'teacher', 'modifier'],
-      checkboxVal: defaultFormThead, // checkboxVal
-      formThead: defaultFormThead // 默认表头
+      editClassFormRules: {
+        className: [
+          { required: true, message: '请输入班级名称', trigger: 'blur' }
+        ]
+      }
     }
   },
-  watch: {
-    checkboxVal(valArr) {
-      this.formThead = this.formTheadOptions.filter(i => valArr.indexOf(i) >= 0)
-      this.key = this.key + 1// 为了保证table 每次都会重渲
-    }
+  mounted() {
+    // 发起查询请求
+    this.queryData()
   },
   methods: {
+    queryData() {
+      // 模拟后台数据
+      const data = [
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        },
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        },
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        },
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        },
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        },
+        {
+          classID: '255',
+          className: '	初一晚辅01班',
+          schoolName: '福州一中',
+          grade: '初一',
+          creationTime: '2020-11-08 15:43:06',
+          founder: '启智文坊学堂',
+          modifyTime: '-',
+          editTime: '-',
+          editName: '-',
+          teacher: '傅雄,林珍,蒋启文',
+          modifier: '-'
+        }]
+      this.tableData = data
+    },
     getClassListData() {
       // 获取列表
     },
@@ -200,18 +225,34 @@ export default {
       this.form.className = ''
     },
     findClassListData() {
-      this.queryInfo.page = 1
       this.getClassListData()
     },
-    // 监听pagesize改变的事件
-    handleSizeChange(newSize) {
-      this.queryInfo.limit = newSize
-      this.getClassListData()
+    edit(classID, className) {
+      this.editVisible = true
+      this.editClassForm.className = className
+      //
     },
-    // 监听页码值改变的事件
-    handleCurrentChange(newPage) {
-      this.queryInfo.page = newPage
-      this.getClassListData()
+    postEdit() {
+      this.editVisible = false
+      // 接口
+    },
+    deleteClass(classID) {
+      // 删除班级
+      this.$confirm('此操作将永久删除该班级信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
