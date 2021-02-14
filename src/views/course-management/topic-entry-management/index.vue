@@ -5,7 +5,7 @@
       size="medium"
       icon="el-icon-plus"
       plain
-      @click="add"
+      @click="addVisible = true"
     >添加</el-button>
     <PageTable
       ref="dataTable"
@@ -221,6 +221,181 @@
         <el-button type="primary" @click="postEdit">保存</el-button>
       </div>
     </el-dialog>
+    <!--添加题目-->
+    <el-dialog title="添加题目" :visible.sync="addVisible">
+      <el-card style="margin:10px">
+        <div>
+          <h4 style="text-align: left; font-size: 18px;">
+            题目：
+            <el-input
+              v-model="addQuestionForm.question"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </h4>
+          <div>
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              multiple
+              :limit="2"
+              :on-exceed="handleExceed"
+              :file-list="fileList"
+            >
+              <el-button size="small" type="primary">上传题目图片</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </div>
+          <div style="margin-top:20px">
+            <p style="font-size: 15px;display:inline;">
+              难度等级：
+              <el-select v-model="addQuestionForm.difficultyValue" placeholder="请选择">
+                <el-option
+                  v-for="item in difficultyOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              题型：
+              <el-select v-model="addQuestionForm.typeValue" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </p>
+          </div>
+          <div v-if="addQuestionForm.typeValue == '0'" style="margin-top:20px;">
+            <p style="font-size: 15px;display:inline;">
+              A.
+              <el-input
+                v-model="addQuestionForm.optionA"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              B.
+              <el-input
+                v-model="addQuestionForm.optionB"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              C.
+              <el-input
+                v-model="addQuestionForm.optionC"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              D.
+              <el-input
+                v-model="addQuestionForm.optionD"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              E.
+              <el-input
+                v-model="addQuestionForm.optionE"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+          </div>
+          <el-divider />
+          <p style="font-size: 15px;">
+            简明答案：
+            <el-input
+              v-model="addQuestionForm.rightOption"
+              size="small"
+              type="textarea"
+              style="width: 550px"
+              placeholder="请输入内容"
+              autosize
+              clearable
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            详细答案：
+            <el-input
+              v-model="addQuestionForm.detailOption"
+              size="small"
+              type="textarea"
+              style="width: 550px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            解析：
+            <el-input
+              v-model="addQuestionForm.analysis"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            知识点：
+            <el-input
+              v-model="addQuestionForm.knowledge"
+              size="small"
+              type="textarea"
+              style="width: 565px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            年级：
+            <el-input
+              v-model="addQuestionForm.grade"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button @click="addVisible = false">取消</el-button>
+        <el-button type="primary" @click="postAdd">保存</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -263,7 +438,6 @@ export default {
         value: '1',
         label: '填空题'
       }],
-      // value: '0',
       difficultyOptions: [{
         value: '1',
         label: '1'
@@ -279,8 +453,25 @@ export default {
       }, {
         value: '5',
         label: '5'
-      }]
-      // difficultyValue: ''
+      }],
+      addVisible: false,
+      addQuestionForm: {
+        question: '',
+        img: '',
+        typeValue: '',
+        difficultyValue: '',
+        optionA: '',
+        optionB: '',
+        optionC: '',
+        optionD: '',
+        optionE: '',
+        rightOption: '',
+        detailOption: '',
+        analysis: '',
+        knowledge: '',
+        grade: ''
+      },
+      fileList: []
     }
   },
   mounted() {
@@ -299,8 +490,9 @@ export default {
 
       this.tableData = data
     },
-    add() {
-      // 添加
+    postAdd() {
+      this.addVisible = false
+      // 添加题目接口
     },
     edit(id) {
       // 编辑
@@ -327,6 +519,18 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 2 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
     }
   }
 }
