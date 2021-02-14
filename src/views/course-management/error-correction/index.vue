@@ -137,25 +137,29 @@
               style="width: 60px; height: 60px;"
             >
           </div>
-          <p v-if="questionForm.optionA !== ''" style="font-size: 15px;display:inline;">
-            A.{{ questionForm.optionA }}
-          </p>
-          <p v-if="questionForm.optionB !== ''" style="font-size: 15px;display:inline;">
-            B.{{ questionForm.optionB }}
-          </p>
-          <p v-if="questionForm.optionC !== ''" style="font-size: 15px;display:inline;">
-            C.{{ questionForm.optionC }}
-          </p>
-          <p v-if="questionForm.optionD !== ''" style="font-size: 15px;display:inline;">
-            D.{{ questionForm.optionD }}
-          </p>
-          <p v-if="questionForm.optionE !== ''" style="font-size: 15px;display:inline;">
-            E.{{ questionForm.optionE }}
-          </p>
+          <div style="margin-bottom: 60px;">
+            <p v-if="questionForm.optionA !== ''" style="font-size: 15px;float:left; width:20%;">
+              A.{{ questionForm.optionA }}
+            </p>
+            <p v-if="questionForm.optionB !== ''" style="font-size: 15px;float:left; width:20%;">
+              B.{{ questionForm.optionB }}
+            </p>
+            <p v-if="questionForm.optionC !== ''" style="font-size: 15px;float:left; width:20%;">
+              C.{{ questionForm.optionC }}
+            </p>
+            <p v-if="questionForm.optionD !== ''" style="font-size: 15px;float:left; width:20%;">
+              D.{{ questionForm.optionD }}
+            </p>
+            <p v-if="questionForm.optionE !== ''" style="font-size: 15px;float:left; width:20%;">
+              E.{{ questionForm.optionE }}
+            </p>
+          </div>
           <el-divider />
-          <p style="font-size: 15px;">
-            简明答案：{{ questionForm.rightOption }}
-          </p>
+          <div>
+            <p style="font-size: 15px;">
+              简明答案：{{ questionForm.rightOption }}
+            </p>
+          </div>
           <el-divider />
           <p style="font-size: 15px;">
             详细答案：{{ questionForm.detailOption }}
@@ -204,18 +208,18 @@ export default {
       auditTitle: '审核题目',
       questionForm: {
         id: '1',
-        question: '题目',
+        question: '12时30分，钟面上时针与分针所夹的角是（　　）',
         img: '',
-        optionA: '1',
-        optionB: '2',
-        optionC: '3',
-        optionD: '4',
-        optionE: '5',
-        rightOption: '1',
-        detailOption: '详细答案blablabla',
-        analysis: '解析',
-        knowledge: '',
-        grade: ''
+        optionA: '80°',
+        optionB: '100°',
+        optionC: '110°',
+        optionD: '165°',
+        optionE: '',
+        rightOption: 'D',
+        detailOption: '【解答】解：12点半时，时针指向1和12中间，分针指向6,钟表12个数字，每相邻两个数字之间的夹角为30°，半个格是15°，因此12点半时，分针与时针的夹角正好是30°×5+15°=165°,故应选：D．',
+        analysis: '【分析】画出图形，利用钟表表盘的特征解答．',
+        knowledge: '时、分、秒及其关系、单位换算与计算,角的概念及其分类',
+        grade: 'null@160'
       }
     }
   },
