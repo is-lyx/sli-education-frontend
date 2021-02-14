@@ -40,14 +40,187 @@
       <el-table-column v-if="columnVisibles[16]" label="操作" min-width="100">
         <template slot-scope="scope">
           <el-button
+            type="primary"
+            size="mini"
+            @click="edit(scope.row.id)"
+          >编辑</el-button>
+          <el-button
             type="danger"
             size="mini"
-            icon="el-icon-close"
-            @click="deleteQuestion(scope.row)"
+            @click="deleteQuestion(scope.row.id)"
           >删除</el-button>
         </template>
       </el-table-column>
     </PageTable>
+    <!--编辑-->
+    <el-dialog :title="editTitle" :visible.sync="editVisible">
+      <el-card style="margin:10px">
+        <div>
+          <h4 style="text-align: left; font-size: 18px;">
+            题目：
+            <el-input
+              v-model="questionForm.question"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </h4>
+          <div>
+            <el-image
+              v-if="questionForm.img !== null"
+              style="width: 60px; height: 60px;"
+              :src="questionForm.img"
+            />
+            <img
+              v-else
+              src="../../../assets/404_images/404.png"
+              style="width: 60px; height: 60px;"
+            >
+          </div>
+          <p style="font-size: 15px;display:inline;">
+            难度等级：
+            <el-select v-model="questionForm.difficultyValue" placeholder="请选择">
+              <el-option
+                v-for="item in difficultyOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </p>
+          <p style="font-size: 15px;display:inline;">
+            题型：
+            <el-select v-model="questionForm.typeValue" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </p>
+          <div v-if="questionForm.typeValue == '0'" style="margin-top:20px;">
+            <p style="font-size: 15px;display:inline;">
+              A.
+              <el-input
+                v-model="questionForm.optionA"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              B.
+              <el-input
+                v-model="questionForm.optionB"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              C.
+              <el-input
+                v-model="questionForm.optionC"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              D.
+              <el-input
+                v-model="questionForm.optionD"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+            <p style="font-size: 15px;display:inline;">
+              E.
+              <el-input
+                v-model="questionForm.optionE"
+                size="small"
+                style="width: 110px"
+                placeholder="请输入内容"
+                clearable
+              />
+            </p>
+          </div>
+          <el-divider />
+          <p style="font-size: 15px;">
+            简明答案：
+            <el-input
+              v-model="questionForm.rightOption"
+              size="small"
+              type="textarea"
+              style="width: 550px"
+              placeholder="请输入内容"
+              autosize
+              clearable
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            详细答案：
+            <el-input
+              v-model="questionForm.detailOption"
+              size="small"
+              type="textarea"
+              style="width: 550px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            解析：
+            <el-input
+              v-model="questionForm.analysis"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            知识点：
+            <el-input
+              v-model="questionForm.knowledge"
+              size="small"
+              type="textarea"
+              style="width: 565px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+          <el-divider />
+          <p style="font-size: 15px;">
+            年级：
+            <el-input
+              v-model="questionForm.grade"
+              size="small"
+              type="textarea"
+              style="width: 580px"
+              placeholder="请输入内容"
+              autosize
+            />
+          </p>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button @click="editVisible = false">取消</el-button>
+        <el-button type="primary" @click="postEdit">保存</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -63,7 +236,51 @@ export default {
   data() {
     return {
       tableData: [],
-      columnVisibles: new Array(17).fill(true)
+      columnVisibles: new Array(17).fill(true),
+      editTitle: '编辑题目',
+      editVisible: false, // 编辑题目框
+      questionForm: {
+        id: '1',
+        question: '我是题目',
+        img: '',
+        typeValue: '0',
+        difficultyValue: '1',
+        optionA: '1',
+        optionB: '2',
+        optionC: '3',
+        optionD: '4',
+        optionE: '5',
+        rightOption: '1',
+        detailOption: '详细答案blablabla',
+        analysis: '解析',
+        knowledge: '-',
+        grade: '-'
+      },
+      options: [{
+        value: '0',
+        label: '选择题'
+      }, {
+        value: '1',
+        label: '填空题'
+      }],
+      // value: '0',
+      difficultyOptions: [{
+        value: '1',
+        label: '1'
+      }, {
+        value: '2',
+        label: '2'
+      }, {
+        value: '3',
+        label: '3'
+      }, {
+        value: '4',
+        label: '4'
+      }, {
+        value: '5',
+        label: '5'
+      }]
+      // difficultyValue: ''
     }
   },
   mounted() {
@@ -82,14 +299,19 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
     add() {
       // 添加
     },
-    deleteQuestion(row) {
+    edit(id) {
+      // 编辑
+      this.editVisible = true
+      this.editTitle = '编辑题目(' + id + ')'
+    },
+    postEdit() {
+      this.editVisible = false
+      // 传修改后的表单，连接口
+    },
+    deleteQuestion(id) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
