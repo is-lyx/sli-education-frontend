@@ -14,11 +14,29 @@
           />
         </p>
         <p style="display: inline">
+          选择班级：
+          <el-select
+            v-model="studentWorkForm.className"
+            style="width: 300px"
+            multiple
+            filterable
+            placeholder="请选择班级"
+          >
+            <el-option
+              v-for="item in classOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </p>
+        <p style="display: inline">
           选择学生：
           <el-select
             v-model="studentWorkForm.studentName"
             style="width: 300px"
             multiple
+            filterable
             placeholder="请选择学生"
           >
             <el-option
@@ -58,6 +76,7 @@
           <el-select
             v-model="studentWorkForm.version"
             clearable
+            filterable
             style="width: 300px"
             placeholder="请选择版本"
           >
@@ -74,6 +93,7 @@
           <el-select
             v-model="studentWorkForm.grade"
             clearable
+            filterable
             style="width: 300px"
             placeholder="请选择年级"
           >
@@ -102,6 +122,7 @@
             v-model="studentWorkForm.chapterDirectory"
             style="width: 300px"
             multiple
+            filterable
             placeholder="请选择章节目录"
           >
             <el-option
@@ -119,6 +140,7 @@
             v-model="studentWorkForm.knowledgeStructure"
             style="width: 300px"
             multiple
+            filterable
             placeholder="请选择知识点结构"
           >
             <el-option
@@ -206,6 +228,7 @@ export default {
       studentWorkForm: {
         workName: '',
         studentName: [],
+        className: [],
         time: '',
         version: '',
         grade: '',
@@ -238,6 +261,7 @@ export default {
           label: '测试学生5'
         }
       ],
+      classOptions: [],
       versionOptions: [],
       gradeOptions: [],
       chapterDirectoryOptions: [],
@@ -246,12 +270,39 @@ export default {
   },
   mounted() {
     // 发起查询请求
+    this.getClassOptionsData()
     this.getVersionOptionsData()
     this.getGradeOptionsData()
     this.getChapterDirectoryOptionsData()
     this.getKnowledgeStructureOptionsData()
   },
   methods: {
+    getClassOptionsData() {
+      const data = [
+        {
+          value: '1',
+          label: '高一辅导01班'
+        },
+        {
+          value: '2',
+          label: '初一晚辅01班'
+        },
+        {
+          value: '3',
+          label: '初二晚辅01班'
+        },
+        {
+          value: '4',
+          label: '初一托管01班'
+        },
+        {
+          value: '5',
+          label: '数据待接口补充'
+        }
+      ]
+      this.classOptions = data
+      // 重新获取学生列表
+    },
     getVersionOptionsData() {
       // 模拟后台数据
       const data = [

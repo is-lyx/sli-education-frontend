@@ -186,6 +186,7 @@ export default {
     },
     add() {
       // 添加作业
+      this.$router.push({ path: '/AddStudentWork' })
     }
   }
 }
