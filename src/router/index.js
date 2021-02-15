@@ -250,6 +250,12 @@ export const asyncRoutes = [
         meta: { title: '添加学生作业' },
         hidden: true
       }, {
+        path: '/EditStudentWork',
+        name: '编辑学生作业',
+        component: () => import('@/views/operation-test/student-work/EditStudentWork'),
+        meta: { title: '编辑学生作业' },
+        hidden: true
+      }, {
         path: 'class-work',
         name: '班级作业',
         component: () => import('@/views/operation-test/class-work/index'),

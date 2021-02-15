@@ -196,6 +196,7 @@ export default {
     },
     edit(id) {
       // 编辑
+      this.$router.push({ path: '/EditStudentWork', query: { id: id }})
     },
     deleteWork(id) {
       // 删除作业

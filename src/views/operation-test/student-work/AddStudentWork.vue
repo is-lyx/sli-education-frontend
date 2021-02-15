@@ -215,7 +215,6 @@
     </div>
     <div style="margin-top: 20px;text-align: center;">
       <el-button type="primary" @click="postStudentWork">保存</el-button>
-      <el-button @click="back">取消</el-button>
     </div>
   </div>
 </template>
@@ -236,8 +235,7 @@ export default {
         testType: '', // 1是通过章节目录选择，2是通过知识点结构选择
         chapterDirectory: [], // 章节目录
         testContent: [], // 章节目录+题目数
-        knowledgeStructure: [], // 知识点结构
-        num: []
+        knowledgeStructure: [] // 知识点结构
       },
       studentOptions: [
         {
@@ -432,10 +430,6 @@ export default {
     postStudentWork() {
       // 保存，看情况加数据校验
       // 连post信息的接口
-    },
-    back() {
-      // 取消
-      this.$router.push({ path: '/student-work' })
     },
     test() {
       console.log(this.studentWorkForm.testContent)
