@@ -195,10 +195,6 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
     getStudyReport(row) {
       // 获取学习报告
     },
@@ -221,6 +217,7 @@ export default {
     },
     add() {
       // 添加作业
+      this.$router.push({ path: '/AddStudentWork' })
     }
   }
 }
