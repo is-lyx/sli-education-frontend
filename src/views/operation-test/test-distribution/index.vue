@@ -90,7 +90,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="edit(scope.row)"
+            @click="edit(scope.row.classWorkID)"
           >编辑</el-button>
           <el-button
             type="danger"
@@ -142,8 +142,9 @@ export default {
       // 详细报告
       this.$router.push({ path: '/DetailReport', query: { id: classID, className: className }})
     },
-    edit(row) {
+    edit(classWorkID) {
       // 编辑
+      this.$router.push({ path: '/EditStudentWork', query: { id: classWorkID }})
     },
     deleteWork() {
       // 删除作业
@@ -170,7 +171,8 @@ export default {
       this.form.class = ''
     },
     add() {
-      // 添加作业
+      // 添加考试
+      this.$router.push({ path: '/AddStudentTest' })
     }
   }
 }

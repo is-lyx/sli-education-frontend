@@ -6,7 +6,7 @@
       </el-divider>
       <div style="margin-left: 40px">
         <p style="display: inline">
-          作业名称：
+          考试名称：
           <el-input
             v-model="studentWorkForm.workName"
             placeholder="请输入内容"
@@ -106,6 +106,71 @@
             />
           </el-select>
         </p>
+        <p style="display: inline">
+          考试类型：
+          <el-select
+            v-model="studentWorkForm.type"
+            clearable
+            filterable
+            style="width: 300px"
+            placeholder="请选择考试类型"
+          >
+            <el-option
+              label="线上作业"
+              value="0"
+            />
+            <el-option
+              label="线下打印"
+              value="1"
+            />
+          </el-select>
+        </p>
+        <p>
+          题型题量：
+          <el-table
+            :data="studentWorkForm.testTypeNum"
+            stripe
+            style="display: inline-block; width: 1000px;"
+          >
+            <el-table-column prop="testType" label="题型" width="180" />
+            <el-table-column prop="radio" label="单选题" width="180">
+              <template slot-scope="scope">
+                <el-input
+                  v-model="studentWorkForm.testTypeNum[scope.$index].radio"
+                  placeholder="请输入内容"
+                  clearable
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="multiSelect" label="多选题" width="180">
+              <template slot-scope="scope">
+                <el-input
+                  v-model="studentWorkForm.testTypeNum[scope.$index].multiSelect"
+                  placeholder="请输入内容"
+                  clearable
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="fillBlanks" label="填空题" width="180">
+              <template slot-scope="scope">
+                <el-input
+                  v-model="studentWorkForm.testTypeNum[scope.$index].fillBlanks"
+                  placeholder="请输入内容"
+                  clearable
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="shortAnswer" label="简答题" width="180">
+              <template slot-scope="scope">
+                <el-input
+                  v-model="studentWorkForm.testTypeNum[scope.$index].shortAnswer"
+                  placeholder="请输入内容"
+                  clearable
+                />
+              </template>
+            </el-table-column>
+          </el-table>
+        </p>
         <p>
           考察知识列表：
           <el-radio-group
@@ -120,7 +185,7 @@
           选择章节目录：
           <el-select
             v-model="studentWorkForm.chapterDirectory"
-            style="width: 300px"
+            style="width: 400px"
             multiple
             filterable
             placeholder="请选择章节目录"
@@ -132,13 +197,12 @@
               :value="item.label"
             />
           </el-select>
-          <el-button type="primary" @click="showChapterTable">确认</el-button>
         </p>
         <p v-else-if="studentWorkForm.testType == '2'">
           选择知识点结构：
           <el-select
             v-model="studentWorkForm.knowledgeStructure"
-            style="width: 300px"
+            style="width: 400px"
             multiple
             filterable
             placeholder="请选择知识点结构"
@@ -150,58 +214,7 @@
               :value="item.label"
             />
           </el-select>
-          <el-button type="primary" @click="showKnowledgeTable">确认</el-button>
         </p>
-        <div
-          v-if="
-            studentWorkForm.knowledgeStructure.length != '0' &&
-              tableVisible == true
-          "
-        >
-          <el-table
-            :data="studentWorkForm.testContent"
-            stripe
-            style="width: 100%"
-          >
-            <el-table-column prop="testName" label="知识点" width="300" />
-            <el-table-column prop="testNum" label="题数" width="180">
-              <template slot-scope="scope">
-                <el-input
-                  v-model="studentWorkForm.testContent[scope.$index].testNum"
-                  placeholder="请输入内容"
-                  clearable
-                />
-              </template>
-            </el-table-column>
-          </el-table>
-          <!--测试按钮
-          <el-button @click="test">测试</el-button>-->
-        </div>
-        <div
-          v-else-if="
-            studentWorkForm.chapterDirectory.length != '0' &&
-              tableVisible == true
-          "
-        >
-          <el-table
-            :data="studentWorkForm.testContent"
-            stripe
-            style="width: 100%"
-          >
-            <el-table-column prop="testName" label="章节" width="300" />
-            <el-table-column prop="testNum" label="题数" width="180">
-              <template slot-scope="scope">
-                <el-input
-                  v-model="studentWorkForm.testContent[scope.$index].testNum"
-                  placeholder="请输入内容"
-                  clearable
-                />
-              </template>
-            </el-table-column>
-          </el-table>
-          <!--测试按钮
-          <el-button @click="test">测试</el-button>-->
-        </div>
       </div>
     </div>
     <div style="margin-top: 40px">
@@ -231,7 +244,6 @@
 export default {
   data() {
     return {
-      tableVisible: false,
       studentWorkForm: {
         workName: '',
         studentName: [],
@@ -241,6 +253,8 @@ export default {
         grade: '',
         note: '',
         testType: '', // 1是通过章节目录选择，2是通过知识点结构选择
+        type: '', // 考试类型，作业或者考试
+        testTypeNum: [], // 题型题量
         chapterDirectory: [], // 章节目录
         testContent: [], // 章节目录+题目数
         knowledgeStructure: [] // 知识点结构
@@ -281,6 +295,7 @@ export default {
     this.getGradeOptionsData()
     this.getChapterDirectoryOptionsData()
     this.getKnowledgeStructureOptionsData()
+    this.getTestTypeNumTable()
   },
   methods: {
     getClassOptionsData() {
@@ -410,38 +425,23 @@ export default {
       ]
       this.knowledgeStructureOptions = data
     },
-    showChapterTable() {
+    getTestTypeNumTable() {
       const data = []
-      for (var i = 0; i < this.studentWorkForm.chapterDirectory.length; i++) {
-        data.push({
-          testName: this.studentWorkForm.chapterDirectory[i],
-          testNum: 0
-        })
-      }
-      this.studentWorkForm.testContent = data
-      this.tableVisible = true
-    },
-    showKnowledgeTable() {
-      const data = []
-      for (var i = 0; i < this.studentWorkForm.knowledgeStructure.length; i++) {
-        data.push({
-          testName: this.studentWorkForm.knowledgeStructure[i],
-          testNum: 0
-        })
-      }
-      this.studentWorkForm.testContent = data
-      this.tableVisible = true
+      data.push({
+        testType: '题量',
+        radio: '10',
+        multiSelect: '5',
+        fillBlanks: '5',
+        shortAnswer: '0'
+      })
+      this.studentWorkForm.testTypeNum = data
     },
     changeTestType() {
-      this.tableVisible = false
+      // this.tableVisible = false;
     },
     postStudentWork() {
       // 保存，看情况加数据校验
       // 连post信息的接口
-    },
-    test() {
-      console.log(this.studentWorkForm.testContent)
-      console.log(this.tableVisible)
     }
   }
 }

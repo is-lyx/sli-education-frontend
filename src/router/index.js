@@ -272,6 +272,12 @@ export const asyncRoutes = [
         name: '考试分发',
         component: () => import('@/views/operation-test/test-distribution/index'),
         meta: { title: '考试分发' }
+      }, {
+        path: '/AddStudentTest',
+        name: '添加考试',
+        component: () => import('@/views/operation-test/test-distribution/AddStudentTest'),
+        meta: { title: '添加考试' },
+        hidden: true
       }
     ]
   },
