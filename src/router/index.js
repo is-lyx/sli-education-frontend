@@ -260,8 +260,13 @@ export const asyncRoutes = [
         name: '班级作业',
         component: () => import('@/views/operation-test/class-work/index'),
         meta: { title: '班级作业' }
+      }, {
+        path: '/DetailReport',
+        name: '详情报告',
+        component: () => import('@/views/operation-test/class-work/DetailReport'),
+        meta: { title: '详情报告' },
+        hidden: true
       },
-
       {
         path: 'test-distribution',
         name: '考试分发',

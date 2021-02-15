@@ -69,7 +69,7 @@
     >
       <el-table-column v-if="columnVisibles[0]" label="班级作业ID" prop="classWorkID" />
       <el-table-column v-if="columnVisibles[1]" label="班级ID" prop="classID" />
-      <el-table-column v-if="columnVisibles[2]" label="班级" prop="class" />
+      <el-table-column v-if="columnVisibles[2]" label="班级" prop="className" />
       <el-table-column v-if="columnVisibles[3]" label="作业名称" prop="homeworkName" />
       <el-table-column v-if="columnVisibles[4]" label="考试类型" prop="testType" />
       <el-table-column v-if="columnVisibles[5]" label="开始时间" prop="startTime" />
@@ -85,7 +85,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="getReport(scope.row)"
+            @click="getReport(scope.row.classID,scope.row.className)"
           >详细报告</el-button>
           <el-button
             type="primary"
@@ -130,7 +130,7 @@ export default {
       // 模拟后台数据
       const data = []
       for (var i = 1; i <= 23; i++) {
-        data.push({ classWorkID: i, classID: i, class: i,
+        data.push({ classWorkID: i, classID: i, className: i,
           homeworkName: i, testType: i, startTime: i, endTime: i,
           testTime: i, amountOfTheQuestions: i, foundTime: i, score: i,
           testState: i, usingTime: i })
@@ -138,12 +138,9 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
-    getReport(row) {
+    getReport(classID, className) {
       // 详细报告
+      this.$router.push({ path: '/DetailReport', query: { id: classID, className: className }})
     },
     edit(row) {
       // 编辑

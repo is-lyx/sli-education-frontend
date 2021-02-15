@@ -103,7 +103,7 @@
     >
       <el-table-column v-if="columnVisibles[0]" label="班级作业ID" prop="classWorkID" />
       <el-table-column v-if="columnVisibles[1]" label="班级ID" prop="classID" />
-      <el-table-column v-if="columnVisibles[2]" label="班级" prop="class" />
+      <el-table-column v-if="columnVisibles[2]" label="班级" prop="className" />
       <el-table-column v-if="columnVisibles[3]" label="作业名称" prop="homeworkName" />
       <el-table-column v-if="columnVisibles[4]" label="开始时间" prop="startTime" />
       <el-table-column v-if="columnVisibles[5]" label="结束时间" prop="endTime" />
@@ -113,8 +113,13 @@
       <el-table-column v-if="columnVisibles[9]" label="分数" prop="score" />
       <el-table-column v-if="columnVisibles[10]" label="完成情况" prop="finishState" />
       <el-table-column v-if="columnVisibles[11]" label="平均用时" prop="avgUsingTime" />
-      <el-table-column v-if="columnVisibles[12]" label="操作" min-width="100">
+      <el-table-column v-if="columnVisibles[12]" label="操作" min-width="170">
         <template slot-scope="scope">
+          <el-button
+            type="primary"
+            size="mini"
+            @click="getDetailReport(scope.row.classWorkID,scope.row.className)"
+          >详情报告</el-button>
           <el-button
             type="primary"
             size="mini"
@@ -159,7 +164,7 @@ export default {
       // 模拟后台数据
       const data = []
       for (var i = 1; i <= 23; i++) {
-        data.push({ classWorkID: i, classID: i, class: i,
+        data.push({ classWorkID: i, classID: i, className: i,
           homeworkName: i, startTime: i, endTime: i,
           totalDay: i, amountOfTheQuestions: i, foundTime: i, score: i,
           finishState: i, avgUsingTime: i })
@@ -199,6 +204,10 @@ export default {
     add() {
       // 添加作业
       this.$router.push({ path: '/AddStudentWork' })
+    },
+    getDetailReport(classWorkID, className) {
+      // 获取详情报告
+      this.$router.push({ path: '/DetailReport', query: { id: classWorkID, className: className }})
     }
   }
 }
