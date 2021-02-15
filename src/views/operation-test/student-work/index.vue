@@ -130,18 +130,13 @@
       <el-table-column v-if="columnVisibles[11]" label="状态" prop="state" />
       <el-table-column v-if="columnVisibles[12]" label="分数" sortable prop="grade" />
       <el-table-column v-if="columnVisibles[13]" label="用时" prop="usingTime" />
-      <el-table-column v-if="columnVisibles[14]" label="操作" min-width="250">
+      <el-table-column v-if="columnVisibles[14]" label="操作" min-width="180">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
-            @click="getStudyReport(scope.row)"
+            @click="getStudyReport(scope.row.id,scope.row.studentName)"
           >学习报告</el-button>
-          <el-button
-            type="primary"
-            size="mini"
-            @click="getHomeworkDetails(scope.row)"
-          >作业详情</el-button>
           <el-button
             type="primary"
             size="mini"
@@ -195,11 +190,9 @@ export default {
 
       this.tableData = data
     },
-    getStudyReport(row) {
+    getStudyReport(id, studentName) {
       // 获取学习报告
-    },
-    getHomeworkDetails(row) {
-      // 作业详情
+      this.$router.push({ path: '/StudyReport', query: { id: id, name: studentName }})
     },
     edit(row) {
       // 编辑
