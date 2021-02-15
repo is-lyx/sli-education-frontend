@@ -38,6 +38,7 @@
               style="width: 300px"
               multiple
               filterable
+              collapse-tags
               placeholder="请选择学生"
             >
               <el-option

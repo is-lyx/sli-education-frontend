@@ -118,12 +118,12 @@
           <el-button
             type="primary"
             size="mini"
-            @click="edit(scope.row)"
+            @click="edit(scope.row.classWorkID)"
           >编辑</el-button>
           <el-button
             type="danger"
             size="mini"
-            @click="deleteWork(scope.row)"
+            @click="deleteWork(scope.row.classWorkID)"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -167,12 +167,9 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
-    edit(row) {
+    edit(classWorkID) {
       // 编辑
+      this.$router.push({ path: '/EditStudentWork', query: { id: classWorkID }})
     },
     deleteWork() {
       // 删除作业
