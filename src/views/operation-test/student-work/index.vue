@@ -140,12 +140,12 @@
           <el-button
             type="primary"
             size="mini"
-            @click="edit(scope.row)"
+            @click="edit(scope.row.id)"
           >编辑</el-button>
           <el-button
             type="danger"
             size="mini"
-            @click="deleteWork(scope.row)"
+            @click="deleteWork(scope.row.id)"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -194,11 +194,26 @@ export default {
       // 获取学习报告
       this.$router.push({ path: '/StudyReport', query: { id: id, name: studentName }})
     },
-    edit(row) {
+    edit(id) {
       // 编辑
     },
-    deleteWork() {
+    deleteWork(id) {
       // 删除作业
+      this.$confirm('此操作将永久删除该条记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     findHomeworkListData() {
       // 搜索
