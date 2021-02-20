@@ -680,17 +680,17 @@
           <el-button
             type="primary"
             size="mini"
-            @click="preview(scope.row)"
+            @click="preview(scope.row.id)"
           >预览</el-button>
           <el-button
             type="primary"
             size="mini"
-            @click="distribution(scope.row)"
+            @click="distribution(scope.row.id)"
           >分发</el-button>
           <el-button
             type="danger"
             size="mini"
-            @click="deleteWork(scope.row)"
+            @click="deleteWork(scope.row.id)"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -741,14 +741,29 @@ export default {
 
       this.tableData = data
     },
-    preview(row) {
+    preview(id) {
       // 预览
     },
-    distribution(row) {
+    distribution(id) {
       // 分发
     },
-    deleteWork() {
+    deleteWork(id) {
       // 删除
+      this.$confirm('此操作将永久删除该条记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     findTestListData() {
       // 搜索
