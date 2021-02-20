@@ -770,9 +770,11 @@ export default {
     },
     chapterAdd() {
       // 章节挑题
+      this.$router.push({ path: '/ChapterAdd' })
     },
     knowledgeAdd() {
       // 知识点挑题
+      this.$router.push({ path: '/KnowledgeAdd' })
     }
   }
 }

@@ -256,7 +256,6 @@ export default {
         type: '', // 考试类型，作业或者考试
         testTypeNum: [], // 题型题量
         chapterDirectory: [], // 章节目录
-        testContent: [], // 章节目录+题目数
         knowledgeStructure: [] // 知识点结构
       },
       studentOptions: [

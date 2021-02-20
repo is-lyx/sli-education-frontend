@@ -298,6 +298,20 @@ export const asyncRoutes = [
         meta: { title: '组卷中心' }
       },
       {
+        path: '/ChapterAdd',
+        component: () => import('@/views/intelligent-learning/group-center/ChapterAdd'),
+        name: '章节挑题',
+        meta: { title: '章节挑题' },
+        hidden: true
+      },
+      {
+        path: '/KnowledgeAdd',
+        component: () => import('@/views/intelligent-learning/group-center/KnowledgeAdd'),
+        name: '知识点挑题',
+        meta: { title: '知识点挑题' },
+        hidden: true
+      },
+      {
         path: 'pre-school-test',
         component: () => import('@/views/intelligent-learning/pre-school-test/index'), // Parent router-view
         name: '学前测试',
