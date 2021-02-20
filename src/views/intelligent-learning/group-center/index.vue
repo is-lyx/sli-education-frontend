@@ -741,10 +741,6 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
     preview(row) {
       // 预览
     },
