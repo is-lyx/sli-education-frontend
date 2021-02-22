@@ -282,10 +282,6 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
     print(row) {
       // 打印
     },
@@ -316,10 +312,6 @@ export default {
         this.addStudentList[i] = this.dataonLineListSelections[i].id
       }
       console.log(this.addStudentList)
-    },
-    findStudentListData() {
-      // 搜索学生
-      this.getStudentListData()
     },
     showAdd() {
       this.getStudentListData()
