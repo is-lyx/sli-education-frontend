@@ -65,7 +65,7 @@
         size="medium"
         icon="el-icon-plus"
         plain
-        @click="add"
+        @click="showAdd"
       >添加</el-button>
     </div>
 
@@ -111,6 +111,95 @@
       </el-table-column>
     </PageTable>
 
+    <!--添加-->
+    <el-dialog
+      custom-class="customWidth"
+      title="添加学生"
+      :visible.sync="addStudentVisible"
+    >
+      <el-card style="margin: 10px">
+        <el-card shadow="never">
+          <div>
+            <i class="el-icon-search" />
+            <span>筛选搜索</span>
+            <el-button
+              style="float: right"
+              type="primary"
+              size="small"
+              @click="getStudentListData"
+            >查询</el-button>
+            <el-button
+              style="float: right; margin-right: 15px"
+              size="small"
+              @click="handleStudentResetSearch"
+            >重置</el-button>
+          </div>
+          <div style="margin-top: 15px">
+            <el-form
+              :inline="true"
+              :model="studentForm"
+              size="small"
+              label-width="140px"
+            >
+              <div style="text-align: center">
+                <el-form-item label="账号：">
+                  <el-input
+                    v-model="studentForm.id"
+                    style="width: 203px"
+                    placeholder="请输入账号"
+                    @keyup.enter.native="getStudentListData"
+                  />
+                </el-form-item>
+                <el-form-item label="姓名：">
+                  <el-input
+                    v-model="studentForm.name"
+                    style="width: 203px"
+                    placeholder="请输入姓名"
+                    @keyup.enter.native="getStudentListData"
+                  />
+                </el-form-item>
+                <el-form-item label="手机号：">
+                  <el-input
+                    v-model="studentForm.phone"
+                    style="width: 203px"
+                    placeholder="请输入老师姓名"
+                    @keyup.enter.native="getStudentListData"
+                  />
+                </el-form-item>
+              </div>
+            </el-form>
+          </div>
+        </el-card>
+      </el-card>
+      <el-table
+        :data="studentListData"
+        stripe
+        @selection-change="selectionLineChangeHandle"
+      >
+        <el-table-column type="selection" width="55" />
+        <el-table-column property="id" label="账号" />
+        <el-table-column property="name" label="姓名" />
+        <el-table-column property="phone" label="手机号" />
+        <el-table-column property="class" label="班级" />
+        <el-table-column property="teacher" label="老师" />
+      </el-table>
+      <!-- 分页区域 -->
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        style="margin: 25px 15px; text-align: center"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+
+      <div style="text-align: center; margin-top: 20px">
+        <el-button type="primary" @click="add">确定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -124,12 +213,27 @@ export default {
   },
   data() {
     return {
+      queryInfo: {
+        page: 1,
+        limit: 5
+      },
+      total: 0,
       tableData: [],
       form: {
         studentName: '',
         state: ''
       },
-      columnVisibles: new Array(17).fill(true)
+      columnVisibles: new Array(17).fill(true),
+      columnStudentVisibles: new Array(6).fill(true),
+      addStudentVisible: false,
+      studentForm: {
+        id: '',
+        name: '',
+        phone: ''
+      },
+      studentListData: [],
+      dataonLineListSelections: [],
+      addStudentList: []
     }
   },
   mounted() {
@@ -149,10 +253,6 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
     print(row) {
       // 打印
     },
@@ -168,10 +268,67 @@ export default {
     },
     add() {
       // 添加作业
+      this.addStudentVisible = false
+      // 加接口
+    },
+    handleStudentResetSearch() {
+      //
+      this.studentForm.id = ''
+      this.studentForm.name = ''
+      this.studentForm.phone = ''
+    },
+    selectionLineChangeHandle(val) {
+      this.dataonLineListSelections = val
+      for (var i = 0; i < this.dataonLineListSelections.length; i++) {
+        this.addStudentList[i] = this.dataonLineListSelections[i].id
+      }
+      console.log(this.addStudentList)
+    },
+    showAdd() {
+      this.getStudentListData()
+      this.addStudentVisible = true
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.limit = newSize
+      this.getStudentListData()
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.page = newPage
+      this.getStudentListData()
+    },
+    getStudentListData() {
+      const data = [
+        {
+          id: 'qz70019553',
+          name: '张宇杰',
+          phone: '-',
+          class: '初一晚辅01班',
+          teacher: '雷老师'
+        },
+        {
+          id: 'qz80013232',
+          name: '吴德福',
+          phone: '-',
+          class: '初一晚辅01班',
+          teacher: '雷老师'
+        },
+        {
+          id: 'qz40035187',
+          name: '郑泺泺',
+          phone: '-',
+          class: '小学高年级托管班',
+          teacher: '蒋启文'
+        }
+      ]
+      this.studentListData = data
     }
   }
 }
 </script>
 
 <style lang="scss">
+.customWidth {
+  width: 70%;
+}
 </style>

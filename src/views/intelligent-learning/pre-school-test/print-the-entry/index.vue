@@ -328,4 +328,7 @@ export default {
 </script>
 
 <style lang="scss">
+.customWidth {
+  width: 70%;
+}
 </style>
