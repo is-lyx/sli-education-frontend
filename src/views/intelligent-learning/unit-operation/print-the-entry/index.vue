@@ -117,59 +117,57 @@
       title="添加学生"
       :visible.sync="addStudentVisible"
     >
-      <el-card style="margin: 10px">
-        <el-card shadow="never">
-          <div>
-            <i class="el-icon-search" />
-            <span>筛选搜索</span>
-            <el-button
-              style="float: right"
-              type="primary"
-              size="small"
-              @click="getStudentListData"
-            >查询</el-button>
-            <el-button
-              style="float: right; margin-right: 15px"
-              size="small"
-              @click="handleStudentResetSearch"
-            >重置</el-button>
-          </div>
-          <div style="margin-top: 15px">
-            <el-form
-              :inline="true"
-              :model="studentForm"
-              size="small"
-              label-width="140px"
-            >
-              <div style="text-align: center">
-                <el-form-item label="账号：">
-                  <el-input
-                    v-model="studentForm.id"
-                    style="width: 203px"
-                    placeholder="请输入账号"
-                    @keyup.enter.native="getStudentListData"
-                  />
-                </el-form-item>
-                <el-form-item label="姓名：">
-                  <el-input
-                    v-model="studentForm.name"
-                    style="width: 203px"
-                    placeholder="请输入姓名"
-                    @keyup.enter.native="getStudentListData"
-                  />
-                </el-form-item>
-                <el-form-item label="手机号：">
-                  <el-input
-                    v-model="studentForm.phone"
-                    style="width: 203px"
-                    placeholder="请输入老师姓名"
-                    @keyup.enter.native="getStudentListData"
-                  />
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
-        </el-card>
+      <el-card shadow="never">
+        <div>
+          <i class="el-icon-search" />
+          <span>筛选搜索</span>
+          <el-button
+            style="float: right"
+            type="primary"
+            size="small"
+            @click="getStudentListData"
+          >查询</el-button>
+          <el-button
+            style="float: right; margin-right: 15px"
+            size="small"
+            @click="handleStudentResetSearch"
+          >重置</el-button>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form
+            :inline="true"
+            :model="studentForm"
+            size="small"
+            label-width="140px"
+          >
+            <div style="text-align: center">
+              <el-form-item label="账号：">
+                <el-input
+                  v-model="studentForm.id"
+                  style="width: 203px"
+                  placeholder="请输入账号"
+                  @keyup.enter.native="getStudentListData"
+                />
+              </el-form-item>
+              <el-form-item label="姓名：">
+                <el-input
+                  v-model="studentForm.name"
+                  style="width: 203px"
+                  placeholder="请输入姓名"
+                  @keyup.enter.native="getStudentListData"
+                />
+              </el-form-item>
+              <el-form-item label="手机号：">
+                <el-input
+                  v-model="studentForm.phone"
+                  style="width: 203px"
+                  placeholder="请输入老师姓名"
+                  @keyup.enter.native="getStudentListData"
+                />
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
       </el-card>
       <el-table
         :data="studentListData"
