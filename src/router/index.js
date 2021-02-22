@@ -325,10 +325,17 @@ export const asyncRoutes = [
             meta: { title: '打印录入' }
           },
           {
-            path: '/Print',
+            path: '/Print-pre-school-test',
             component: () => import('@/views/intelligent-learning/pre-school-test/print-the-entry/Print'),
             name: '学前测试-打印',
             meta: { title: '打印' },
+            hidden: true
+          },
+          {
+            path: '/Entry-pre-school-test',
+            component: () => import('@/views/intelligent-learning/pre-school-test/print-the-entry/Entry'),
+            name: '学前测试-录入',
+            meta: { title: '录入' },
             hidden: true
           },
           {
@@ -353,10 +360,17 @@ export const asyncRoutes = [
             meta: { title: '打印录入' }
           },
           {
-            path: '/Print',
+            path: '/Print-unit-operation',
             component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry/Print'),
             name: '单元作业-打印',
             meta: { title: '打印' },
+            hidden: true
+          },
+          {
+            path: '/Entry-unit-operation',
+            component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry/Entry'),
+            name: '单元作业-录入',
+            meta: { title: '录入' },
             hidden: true
           },
           {
@@ -381,10 +395,17 @@ export const asyncRoutes = [
             meta: { title: '打印录入' }
           },
           {
-            path: '/Print',
+            path: '/Print-paper-test',
             component: () => import('@/views/intelligent-learning/paper-test/print-the-entry/Print'),
             name: '试卷考试-打印',
             meta: { title: '打印' },
+            hidden: true
+          },
+          {
+            path: '/Entry-paper-test',
+            component: () => import('@/views/intelligent-learning/paper-test/print-the-entry/Entry'),
+            name: '试卷考试-录入',
+            meta: { title: '录入' },
             hidden: true
           },
           {
@@ -409,10 +430,17 @@ export const asyncRoutes = [
             meta: { title: '打印录入' }
           },
           {
-            path: '/Print',
+            path: '/Print-wrong-topic-test',
             component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry/Print'),
             name: '错题测试-打印',
             meta: { title: '打印' },
+            hidden: true
+          },
+          {
+            path: '/Entry-wrong-topic-test',
+            component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry/Entry'),
+            name: '错题测试-录入',
+            meta: { title: '录入' },
             hidden: true
           },
           {

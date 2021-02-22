@@ -105,7 +105,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="entry(scope.row)"
+            @click="entry(scope.row.studentName,scope.row.homeworkName)"
           >录入</el-button>
         </template>
       </el-table-column>
@@ -253,10 +253,11 @@ export default {
     },
     print(studentName, homeworkName) {
       // 打印
-      this.$router.push({ path: '/Print', query: { studentName: studentName, homeworkName: homeworkName }})
+      this.$router.push({ path: '/Print-wrong-topic-test', query: { studentName: studentName, homeworkName: homeworkName }})
     },
-    entry(row) {
+    entry(studentName, homeworkName) {
       // 录入
+      this.$router.push({ path: '/Entry-wrong-topic-test', query: { studentName: studentName, homeworkName: homeworkName }})
     },
     findPreTestListData() {
       // 搜索
