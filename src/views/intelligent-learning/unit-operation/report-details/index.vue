@@ -85,18 +85,13 @@
       <el-table-column v-if="columnVisibles[9]" label="完成情况" prop="finishState" />
       <el-table-column v-if="columnVisibles[10]" label="分数" sortable prop="grade" />
       <el-table-column v-if="columnVisibles[11]" label="用时" prop="usingTime" />
-      <el-table-column v-if="columnVisibles[12]" label="操作" min-width="100">
+      <el-table-column v-if="columnVisibles[12]" label="操作" min-width="70">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
-            @click="detail(scope.row)"
-          >详情</el-button>
-          <el-button
-            type="primary"
-            size="mini"
-            @click="report(scope.row)"
-          >报告</el-button>
+            @click="getStudyReport(scope.row.id,scope.row.studentName)"
+          >学习报告</el-button>
         </template>
       </el-table-column>
     </PageTable>
@@ -139,15 +134,9 @@ export default {
 
       this.tableData = data
     },
-    clickFunc(row) {
-      // console.log(row);
-      alert(JSON.stringify(row))
-    },
-    detail(row) {
-      // 详情
-    },
-    report(row) {
-      // 报告
+    getStudyReport(id, name) {
+      // 学习报告
+      this.$router.push({ path: '/StudyReport', query: { id: id, name: name }})
     },
     findPreTestListData() {
       // 搜索
