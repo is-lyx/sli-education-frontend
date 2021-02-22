@@ -121,7 +121,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="print(scope.row)"
+            @click="print(scope.row.studentName,scope.row.homeworkName)"
           >打印</el-button>
           <el-button
             type="primary"
@@ -281,8 +281,9 @@ export default {
 
       this.tableData = data
     },
-    print(row) {
+    print(studentName, homeworkName) {
       // 打印
+      this.$router.push({ path: '/Print', query: { studentName: studentName, homeworkName: homeworkName }})
     },
     entry(row) {
       // 录入
