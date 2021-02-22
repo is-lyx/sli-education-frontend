@@ -325,6 +325,13 @@ export const asyncRoutes = [
             meta: { title: '打印录入' }
           },
           {
+            path: '/Print',
+            component: () => import('@/views/intelligent-learning/pre-school-test/print-the-entry/Print'),
+            name: '学前测试-打印',
+            meta: { title: '打印' },
+            hidden: true
+          },
+          {
             path: 'report-details',
             component: () => import('@/views/intelligent-learning/pre-school-test/report-details'),
             name: '学前测试-报告详情',
