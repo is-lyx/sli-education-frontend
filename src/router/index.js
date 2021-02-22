@@ -321,13 +321,13 @@ export const asyncRoutes = [
           {
             path: 'print-the-entry',
             component: () => import('@/views/intelligent-learning/pre-school-test/print-the-entry'),
-            name: '打印录入',
+            name: '学前测试-打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
             component: () => import('@/views/intelligent-learning/pre-school-test/report-details'),
-            name: '报告详情',
+            name: '学前测试-报告详情',
             meta: { title: '报告详情' }
           }
         ]
@@ -342,13 +342,13 @@ export const asyncRoutes = [
           {
             path: 'print-the-entry',
             component: () => import('@/views/intelligent-learning/unit-operation/print-the-entry'),
-            name: '打印录入',
+            name: '单元作业-打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
             component: () => import('@/views/intelligent-learning/unit-operation/report-details'),
-            name: '报告详情',
+            name: '单元作业-报告详情',
             meta: { title: '报告详情' }
           }
         ]
@@ -363,13 +363,13 @@ export const asyncRoutes = [
           {
             path: 'print-the-entry',
             component: () => import('@/views/intelligent-learning/paper-test/print-the-entry'),
-            name: '打印录入',
+            name: '试卷考试-打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
             component: () => import('@/views/intelligent-learning/paper-test/report-details'),
-            name: '报告详情',
+            name: '试卷考试-报告详情',
             meta: { title: '报告详情' }
           }
         ]
@@ -384,13 +384,13 @@ export const asyncRoutes = [
           {
             path: 'print-the-entry',
             component: () => import('@/views/intelligent-learning/wrong-topic-test/print-the-entry'),
-            name: '打印录入',
+            name: '错题测试-打印录入',
             meta: { title: '打印录入' }
           },
           {
             path: 'report-details',
             component: () => import('@/views/intelligent-learning/wrong-topic-test/report-details'),
-            name: '报告详情',
+            name: '错题测试-报告详情',
             meta: { title: '报告详情' }
           }
         ]

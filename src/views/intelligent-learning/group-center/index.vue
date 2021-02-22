@@ -466,24 +466,29 @@
           </div>
         </div>
       </el-card>
-      <PageTable
+      <el-table
         :data="studentListData"
-        :page-sizes="[5,10]"
-        :page-size="5"
-
-        :paging="true"
-        :dynamic-column-setting="true"
-        :column-visibles="columnVisibles"
-        :show-always-show-column-in-checkbox="true"
+        stripe
         @selection-change="selectionLineChangeHandle"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column v-if="columnVisibles[1]" label="账号" prop="id" />
-        <el-table-column v-if="columnVisibles[2]" label="姓名" prop="name" />
-        <el-table-column v-if="columnVisibles[3]" label="手机号" prop="phone" />
-        <el-table-column v-if="columnVisibles[4]" label="班级" prop="class" />
-        <el-table-column v-if="columnVisibles[5]" label="老师" prop="teacher" />
-      </PageTable>
+        <el-table-column property="id" label="账号" />
+        <el-table-column property="name" label="姓名" />
+        <el-table-column property="phone" label="手机号" />
+        <el-table-column property="class" label="班级" />
+        <el-table-column property="teacher" label="老师" />
+      </el-table>
+      <!-- 分页区域 -->
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        style="margin: 25px 15px; text-align: center"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
 
       <div style="text-align: center; margin-top: 20px;">
         <el-button
@@ -505,6 +510,11 @@ export default {
   },
   data() {
     return {
+      queryInfo: {
+        page: 1,
+        limit: 5
+      },
+      total: 0,
       testVisible: false,
       distributionVisible: false,
       distributionType: '', // 分发模块
@@ -627,6 +637,15 @@ export default {
       // 分发
       this.distributionVisible = true
       this.testTitle = title
+      this.findStudentListData()
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.limit = newSize
+      this.findStudentListData()
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.page = newPage
       this.findStudentListData()
     },
     findStudentListData() {
