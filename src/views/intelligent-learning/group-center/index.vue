@@ -27,14 +27,6 @@
                 @keyup.enter.native="findTestListData"
               />
             </el-form-item>
-            <el-form-item label="副标题：">
-              <el-input
-                v-model="form.subtitle"
-                style="width: 203px"
-                placeholder="请输入副标题"
-                @keyup.enter.native="findTestListData"
-              />
-            </el-form-item>
             <el-form-item label="年级：">
               <el-select
                 v-model="form.grade"
@@ -524,7 +516,6 @@ export default {
       tableData: [],
       form: {
         title: '',
-        subtitle: '',
         grade: '',
         version: '',
         testType: '',
@@ -710,7 +701,6 @@ export default {
     },
     handleResetSearch() {
       this.form.title = ''
-      this.form.subtitle = ''
       this.form.grade = ''
       this.form.version = ''
       this.form.testType = ''
