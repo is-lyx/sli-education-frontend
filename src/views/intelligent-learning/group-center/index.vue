@@ -392,72 +392,70 @@
       title="试题分发"
       :visible.sync="distributionVisible"
     >
-      <el-card style="margin: 10px">
-        <el-card shadow="never">
-          <div>
-            <i class="el-icon-search" />
-            <span>筛选搜索</span>
-            <el-button
-              style="float: right"
-              type="primary"
-              size="small"
-              @click="findStudentListData"
-            >查询</el-button>
-            <el-button
-              style="float: right; margin-right: 15px"
-              size="small"
-              @click="handleStudentResetSearch"
-            >重置</el-button>
-          </div>
-          <div style="margin-top: 15px">
-            <el-form
-              :inline="true"
-              :model="studentForm"
-              size="small"
-              label-width="140px"
-            >
-              <div style="text-align: center">
-                <el-form-item label="账号：">
-                  <el-input
-                    v-model="studentForm.id"
-                    style="width: 203px"
-                    placeholder="请输入账号"
-                    @keyup.enter.native="findStudentListData"
-                  />
-                </el-form-item>
-                <el-form-item label="姓名：">
-                  <el-input
-                    v-model="studentForm.name"
-                    style="width: 203px"
-                    placeholder="请输入姓名"
-                    @keyup.enter.native="findStudentListData"
-                  />
-                </el-form-item>
-                <el-form-item label="手机号：">
-                  <el-input
-                    v-model="studentForm.phone"
-                    style="width: 203px"
-                    placeholder="请输入老师姓名"
-                    @keyup.enter.native="findStudentListData"
-                  />
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
-        </el-card>
+      <el-card shadow="never">
         <div>
-          <el-divider content-position="left">分发的试卷</el-divider>
-          <h4 style="text-align: center; font-size: 15px">{{ testTitle }}</h4>
+          <i class="el-icon-search" />
+          <span>筛选搜索</span>
+          <el-button
+            style="float: right"
+            type="primary"
+            size="small"
+            @click="findStudentListData"
+          >查询</el-button>
+          <el-button
+            style="float: right; margin-right: 15px"
+            size="small"
+            @click="handleStudentResetSearch"
+          >重置</el-button>
         </div>
-        <div>
-          <el-divider content-position="left">分发信息</el-divider>
-          <div style="margin-left: 30px; margin-bottom: 20px">
-            <p style="display: inline">分发模块：</p>
-            <el-radio v-model="distributionType" label="1">单元作业</el-radio>
-            <el-radio v-model="distributionType" label="2">试卷考试</el-radio>
-          </div>
+        <div style="margin-top: 15px">
+          <el-form
+            :inline="true"
+            :model="studentForm"
+            size="small"
+            label-width="140px"
+          >
+            <div style="text-align: center">
+              <el-form-item label="账号：">
+                <el-input
+                  v-model="studentForm.id"
+                  style="width: 203px"
+                  placeholder="请输入账号"
+                  @keyup.enter.native="findStudentListData"
+                />
+              </el-form-item>
+              <el-form-item label="姓名：">
+                <el-input
+                  v-model="studentForm.name"
+                  style="width: 203px"
+                  placeholder="请输入姓名"
+                  @keyup.enter.native="findStudentListData"
+                />
+              </el-form-item>
+              <el-form-item label="手机号：">
+                <el-input
+                  v-model="studentForm.phone"
+                  style="width: 203px"
+                  placeholder="请输入老师姓名"
+                  @keyup.enter.native="findStudentListData"
+                />
+              </el-form-item>
+            </div>
+          </el-form>
         </div>
       </el-card>
+      <div>
+        <el-divider content-position="left">分发的试卷</el-divider>
+        <h4 style="text-align: center; font-size: 15px">{{ testTitle }}</h4>
+      </div>
+      <div>
+        <el-divider content-position="left">分发信息</el-divider>
+        <div style="margin-left: 30px; margin-bottom: 20px">
+          <p style="display: inline">分发模块：</p>
+          <el-radio v-model="distributionType" label="1">单元作业</el-radio>
+          <el-radio v-model="distributionType" label="2">试卷考试</el-radio>
+        </div>
+      </div>
       <el-table
         :data="studentListData"
         stripe

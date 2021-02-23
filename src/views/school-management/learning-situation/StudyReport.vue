@@ -60,6 +60,15 @@
       </div>
     </el-card>
 
+    <div>
+      <FilenameOption v-model="filename" />
+      <AutoWidthOption v-model="autoWidth" />
+      <BookTypeOption v-model="bookType" />
+      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
+        导出Excel
+      </el-button>
+    </div>
+
     <!-- 列表 -->
     <PageTable
       ref="dataTable"
@@ -113,13 +122,26 @@
 
 <script>
 import PageTable from '../../PageTable.vue'
+import FilenameOption from '../../excel/components/FilenameOption'
+import AutoWidthOption from '../../excel/components/AutoWidthOption'
+import BookTypeOption from '../../excel/components/BookTypeOption'
+import { parseTime } from '@/utils'
 
 export default {
+  name: 'ExportExcel',
   components: {
-    PageTable // 引用表格组件
+    PageTable, // 引用表格组件
+    FilenameOption,
+    AutoWidthOption,
+    BookTypeOption
   },
   data() {
     return {
+      listLoading: true,
+      downloadLoading: false,
+      filename: '',
+      autoWidth: true,
+      bookType: 'xlsx',
       name: this.$route.query.name,
       columnVisibles: new Array(14).fill(true),
       total: 0,
@@ -213,6 +235,32 @@ export default {
     getWorkDetail(testID, name) {
       // 作业详情
       this.$router.push({ path: '/WorkDetail', query: { testID: testID, name: name }})
+    },
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['试卷名称', '创建时间', '提交时间', '一级知识点', '二级知识点', '三级知识点', '题量', '答对题数', '答错题数', '平均难度', '准确率']
+        const filterVal = ['testName', 'creationTime', 'submitTime', 'knowledge1', 'knowledge2', 'knowledge3', 'amountOfTheQuestions', 'isTrue', 'isFalse', 'avgDifference', 'accuracy']
+        const list = this.tableData
+        const data = this.formatJson(filterVal, list)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: this.filename,
+          autoWidth: this.autoWidth,
+          bookType: this.bookType
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
     }
   }
 }
