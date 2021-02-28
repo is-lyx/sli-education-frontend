@@ -159,7 +159,7 @@ export default {
     },
     entryCourse(learningCourseValue) {
       // 进入课程
-      console.log(learningCourseValue)
+      // console.log(learningCourseValue)
       this.$router.push({
         path: '/wisdom-learning',
         query: { learningCourseValue: learningCourseValue }
