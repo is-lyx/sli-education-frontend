@@ -91,7 +91,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        meta: { title: 'Documentation', icon: 'documentation' }
       }
     ]
   },
@@ -129,6 +129,84 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/learning-center',
+    component: Layout,
+    redirect: '/learning-center/index',
+    children: [
+      {
+        path: 'index',
+        name: '学习中心',
+        component: () => import('@/views/learning-center/index'),
+        meta: { title: '学习中心', icon: 'el-icon-reading' }
+      }
+    ]
+  },
+  {
+    path: '/student-course',
+    component: Layout,
+    redirect: '/student-course/index',
+    children: [
+      {
+        path: 'index',
+        name: '我的课程',
+        component: () => import('@/views/student-course/index'),
+        meta: { title: '我的课程', icon: 'el-icon-date' }
+      }
+    ]
+  },
+  {
+    path: '/homework',
+    component: Layout,
+    redirect: '/homework/index',
+    children: [
+      {
+        path: 'index',
+        name: '我的作业',
+        component: () => import('@/views/homework/index'),
+        meta: { title: '我的作业', icon: 'el-icon-edit' }
+      }
+    ]
+  },
+  {
+    path: '/wisdom-learning',
+    component: Layout,
+    redirect: '/wisdom-learning/index',
+    children: [
+      {
+        path: 'index',
+        name: '智慧学',
+        component: () => import('@/views/wisdom-learning/index'),
+        meta: { title: '智慧学', icon: 'el-icon-monitor' }
+      }
+    ]
+  },
+  {
+    path: '/wrong-question',
+    component: Layout,
+    redirect: '/wrong-question/index',
+    children: [
+      {
+        path: 'index',
+        name: '错题库',
+        component: () => import('@/views/wrong-question/index'),
+        meta: { title: '错题库', icon: 'el-icon-notebook-2' }
+      }
+    ]
+  },
+  {
+    path: '/focus-on',
+    component: Layout,
+    redirect: '/focus-on/index',
+    children: [
+      {
+        path: 'index',
+        name: '我的关注',
+        component: () => import('@/views/focus-on/index'),
+        meta: { title: '我的关注', icon: 'el-icon-view' }
+      }
+    ]
+  },
   {
     path: '/activation-code',
     component: Layout,
