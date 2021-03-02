@@ -37,7 +37,7 @@
                 </p>
               </el-col>
               <el-col :span="2">
-                <el-button type="warning">智慧学习</el-button>
+                <el-button type="warning" @click="wisdomLearning(learningCourseValue, item.id, item.title, item.content)">智慧学习</el-button>
               </el-col>
             </el-row>
           </div>
@@ -114,6 +114,12 @@ export default {
         }
       ]
       this.details = data
+    },
+    wisdomLearning(learningCourseValue, id, title, content) {
+      this.$router.push({
+        path: '/learning-center',
+        query: { learningCourseValue: learningCourseValue, id: id, title: title, content: content }
+      })
     }
   }
 }
