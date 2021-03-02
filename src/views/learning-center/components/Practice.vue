@@ -32,8 +32,9 @@
         {{ question[index].question }}
       </p>
       <p style="display: inline;margin-right:200px;">
-        <el-button type="warning" icon="el-icon-star-off" circle />
-        <el-button type="primary" round>纠错</el-button>
+        <el-button v-if="notConcern" type="info" icon="el-icon-star-off" circle @click="getConcern" />
+        <el-button v-if="concern" type="danger" icon="el-icon-star-off" circle @click="cancelConcern" />
+        <el-button type="primary" round @click="audit">纠错</el-button>
       </p>
       <div v-if="question[index]" style="margin-top: 20px;">
         <el-radio
@@ -99,6 +100,7 @@
         智能点评：本题能力测评——{{ answerBack.ability }}，{{ answerBack.remark }}
       </p>
     </div>
+
     <el-row id="row" style="text-align: center; margin-top: 50px">
       <el-button
         v-if="index != 0"
@@ -137,7 +139,9 @@ export default {
         accuracy: 0,
         ability: '', // 能力测评
         remark: '' // 评语
-      }
+      },
+      notConcern: true,
+      concern: false
     }
   },
   mounted() {
@@ -217,6 +221,32 @@ export default {
     nextQuestion() {
       this.index += 1
       this.radio = ''
+    },
+    getConcern() {
+      this.notConcern = false
+      this.concern = true
+      // 添加到我的关注题目集
+    },
+    cancelConcern() {
+      this.concern = false
+      this.notConcern = true
+    },
+    audit() {
+      // 还要传题目id，联调时记得加
+      this.$prompt('请输入本题的错误原因', '纠错', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '你提交的信息是: ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消提交'
+        })
+      })
     }
   }
 }
