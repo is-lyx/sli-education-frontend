@@ -123,6 +123,12 @@ export default {
           reachStandard: '未达标'
         }]
       this.tableData = data
+    },
+    startTest(homeworkName) {
+      this.$router.push({ path: '/Test', query: { homeworkName: homeworkName }})
+    },
+    getReport(homeworkName) {
+      this.$router.push({ path: '/Report', query: { homeworkName: homeworkName }})
     }
   }
 }

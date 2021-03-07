@@ -165,6 +165,20 @@ export const asyncRoutes = [
         name: '我的作业',
         component: () => import('@/views/homework/index'),
         meta: { title: '我的作业', icon: 'el-icon-edit' }
+      },
+      {
+        path: '/Test',
+        name: '测试',
+        component: () => import('@/views/homework/Test'),
+        meta: { title: '测试' },
+        hidden: true
+      },
+      {
+        path: '/Report',
+        name: '报告',
+        component: () => import('@/views/homework/Report'),
+        meta: { title: '报告' },
+        hidden: true
       }
     ]
   },
