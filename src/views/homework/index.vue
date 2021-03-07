@@ -33,7 +33,7 @@
                 v-else
                 type="warning"
                 size="mini"
-                @click="getReport(scope.row.homeworkName)"
+                @click="getReport(scope.row.homeworkName, scope.row.grade)"
               >查看报告</el-button>
             </template>
           </el-table-column>
@@ -127,8 +127,8 @@ export default {
     startTest(homeworkName) {
       this.$router.push({ path: '/Test', query: { homeworkName: homeworkName }})
     },
-    getReport(homeworkName) {
-      this.$router.push({ path: '/Report', query: { homeworkName: homeworkName }})
+    getReport(homeworkName, grade) {
+      this.$router.push({ path: '/Report', query: { homeworkName: homeworkName, grade: grade }})
     }
   }
 }
