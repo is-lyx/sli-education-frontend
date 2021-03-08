@@ -1,20 +1,39 @@
 <template>
   <div>
-    <div style="text-align:center;">
-      <p style="font-size:14px;color:#AD5A5A;display:inline;">当前还剩</p>
-      <p style="font-size:18px;color:#743A3A;display:inline;"> {{ questionList.length }} </p>
-      <p style="font-size:14px;color:#AD5A5A;display:inline;">道错题可消除（请认真清理错题，如果再次做错的题，会继续出现在错题清理里面哦）</p>
+    <div style="text-align: center">
+      <p style="font-size: 14px; color: #ad5a5a; display: inline">当前还剩</p>
+      <p style="font-size: 18px; color: #743a3a; display: inline">
+        {{ questionList.length }}
+      </p>
+      <p style="font-size: 14px; color: #ad5a5a; display: inline">
+        道错题可消除（请认真清理错题，如果再次做错的题，会继续出现在错题清理里面哦）
+      </p>
     </div>
-    <div
-      v-for="(item,index) in questionList"
-      :key="index"
-    >
+    <div style="text-align: center">
+      <p style="font-size: 16px">
+        错题组卷数（1~{{ questionList.length }}）：
+        <el-input
+          v-model="questionNum"
+          size="mini"
+          style="width: 100px"
+          placeholder="请输入题数"
+        />
+        <el-button type="primary" size="mini" style="margin-left: 10px;" @click="getTest(questionNum)">确认</el-button>
+      </p>
+    </div>
+    <el-divider />
+    <div v-for="(item, index) in questionList" :key="index">
       <el-row :gutter="32">
         <el-col :span="20">
-          <p style="margin-left:20px;">{{ index+1 }}.【{{ item.type }}】 {{ item.question }}</p>
+          <p style="margin-left: 20px">
+            {{ index + 1 }}.【{{ item.type }}】 {{ item.question }}
+          </p>
         </el-col>
         <el-col :span="4">
-          <el-button type="warning" @click="answerQuestion(item.id)">答题</el-button>
+          <el-button
+            type="warning"
+            @click="answerQuestion(item.id)"
+          >答题</el-button>
         </el-col>
       </el-row>
       <el-divider />
@@ -34,28 +53,65 @@
           <p>题号：{{ questionID }}</p>
           <p>请输入本题的错误说明：</p>
           <el-input v-model="auditReason" placeholder="请输入内容" />
-          <div style="text-align: center;margin-top:20px;">
-            <el-button type="primary" @click="audit(questionID)">确定</el-button>
+          <div style="text-align: center; margin-top: 20px">
+            <el-button
+              type="primary"
+              @click="audit(questionID)"
+            >确定</el-button>
           </div>
         </el-dialog>
         <el-card style="margin: 10px">
-          <p style="font-size: 18px;"> 【{{ question.type }}】 {{ question.question }}</p>
-          <div style="margin:20px 0px 20px 20px;">
-            <el-radio v-if="question.optionA" v-model="testOption" label="A">A. {{ question.optionA }}</el-radio>
-            <el-radio v-if="question.optionB" v-model="testOption" label="B">B. {{ question.optionB }}</el-radio>
-            <el-radio v-if="question.optionC" v-model="testOption" label="C">C. {{ question.optionC }}</el-radio>
-            <el-radio v-if="question.optionD" v-model="testOption" label="D">D. {{ question.optionD }}</el-radio>
-            <el-radio v-if="question.optionE" v-model="testOption" label="E">E. {{ question.optionE }}</el-radio>
+          <p style="font-size: 18px">
+            【{{ question.type }}】 {{ question.question }}
+          </p>
+          <div style="margin: 20px 0px 20px 20px">
+            <el-radio
+              v-if="question.optionA"
+              v-model="testOption"
+              label="A"
+            >A. {{ question.optionA }}</el-radio>
+            <el-radio
+              v-if="question.optionB"
+              v-model="testOption"
+              label="B"
+            >B. {{ question.optionB }}</el-radio>
+            <el-radio
+              v-if="question.optionC"
+              v-model="testOption"
+              label="C"
+            >C. {{ question.optionC }}</el-radio>
+            <el-radio
+              v-if="question.optionD"
+              v-model="testOption"
+              label="D"
+            >D. {{ question.optionD }}</el-radio>
+            <el-radio
+              v-if="question.optionE"
+              v-model="testOption"
+              label="E"
+            >E. {{ question.optionE }}</el-radio>
           </div>
           <div v-if="checkTrueVisible">
-            <p style="margin-left: 20px;color:#01814A">【提示】恭喜你，答对了哦！</p>
-            <p style="margin-left: 20px;color:#01814A">{{ checkAnswer.parsing }}</p>
-            <p style="margin-left: 20px;color:#01814A">正确答案：{{ checkAnswer.answer }}</p>
+            <p style="margin-left: 20px; color: #01814a">
+              【提示】恭喜你，答对了哦！
+            </p>
+            <p style="margin-left: 20px; color: #01814a">
+              {{ checkAnswer.parsing }}
+            </p>
+            <p style="margin-left: 20px; color: #01814a">
+              正确答案：{{ checkAnswer.answer }}
+            </p>
           </div>
           <div v-if="checkFalseVisible">
-            <p style="margin-left: 20px;color:#AE0000">【提示】又错了哦，再认真思考一下！</p>
-            <p style="margin-left: 20px;color:#AE0000">{{ checkAnswer.parsing }}</p>
-            <p style="margin-left: 20px;color:#AE0000">正确答案：{{ checkAnswer.answer }}</p>
+            <p style="margin-left: 20px; color: #ae0000">
+              【提示】又错了哦，再认真思考一下！
+            </p>
+            <p style="margin-left: 20px; color: #ae0000">
+              {{ checkAnswer.parsing }}
+            </p>
+            <p style="margin-left: 20px; color: #ae0000">
+              正确答案：{{ checkAnswer.answer }}
+            </p>
           </div>
         </el-card>
         <div style="text-align: center">
@@ -68,7 +124,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -81,7 +136,8 @@ export default {
       checkAnswer: {},
       auditVisible: false,
       auditReason: '',
-      questionID: ''
+      questionID: '',
+      questionNum: ''
     }
   },
   mounted() {
@@ -91,21 +147,23 @@ export default {
   methods: {
     queryData() {
       // 模拟后台数据
-      const data = [{
-        id: '1',
-        type: '单选题',
-        question: '下面说法错误的是（　　）'
-      },
-      {
-        id: '2',
-        type: '单选题',
-        question: '把24个苹果平均分成6份，每份是4个，列式是'
-      },
-      {
-        id: '3',
-        type: '单选题',
-        question: '下面说法错误的是（　　）'
-      }]
+      const data = [
+        {
+          id: '1',
+          type: '单选题',
+          question: '下面说法错误的是（　　）'
+        },
+        {
+          id: '2',
+          type: '单选题',
+          question: '把24个苹果平均分成6份，每份是4个，列式是'
+        },
+        {
+          id: '3',
+          type: '单选题',
+          question: '下面说法错误的是（　　）'
+        }
+      ]
       this.questionList = data
     },
     answerQuestion(id) {
@@ -140,6 +198,9 @@ export default {
     handleClose() {
       this.checkTrueVisible = false
       this.checkFalseVisible = false
+    },
+    getTest(questionNum) {
+      this.$router.push({ path: '/Test', query: { homeworkName: '错题卷' }})
     }
   }
 }
