@@ -130,6 +130,19 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/student-dashboard',
+    component: Layout,
+    redirect: '/student-dashboard/index',
+    children: [
+      {
+        path: 'index',
+        name: '学生端首页',
+        component: () => import('@/views/student-dashboard/index'),
+        meta: { title: '首页', icon: 'el-icon-house' }
+      }
+    ]
+  },
+  {
     path: '/learning-center',
     component: Layout,
     redirect: '/learning-center/index',
